@@ -1,15 +1,15 @@
-import { useRef, useEffect, useCallback } from 'react';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { FlatList, RefreshControl, Pressable, Platform } from 'react-native';
-import { Text, YStack, XStack, Button, Avatar, Separator, useTheme } from 'tamagui';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useCallback, useRef } from 'react';
+import { FlatList, Platform, Pressable, RefreshControl } from 'react-native';
+import { Button, Separator, Text, useTheme, XStack, YStack } from 'tamagui';
+import ChatParticipantAvatar from '../components/ChatParticipantAvatar';
+import { useAuth } from '../contexts/AuthContext';
+import { useChat } from '../contexts/ChatContext';
+import useSocketClusterClient from '../hooks/use-socket-cluster-client';
 import { last } from '../utils';
 import { formatWhatsAppTimestamp } from '../utils/format';
-import { useChat } from '../contexts/ChatContext';
-import { useAuth } from '../contexts/AuthContext';
-import useSocketClusterClient from '../hooks/use-socket-cluster-client';
-import ChatParticipantAvatar from '../components/ChatParticipantAvatar';
 
 const ChatHomeScreen = () => {
     const theme = useTheme();
@@ -29,7 +29,7 @@ const ChatHomeScreen = () => {
         const lastParticipant = last(channel.participants);
         const otherParticipant = channel.participants.find((participant) => participant.user !== driver.getAttribute('user')) ?? lastParticipant;
         const lastMessageReceived = channel.last_message ? channel.last_message.created_at : channel.created_at;
-        let lastMessageContent = 'No messages';
+        let lastMessageContent = 'No hay mensajes';
 
         if (channel.last_message?.content) {
             if (channel.participants.length > 2) {

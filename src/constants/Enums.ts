@@ -1,9 +1,9 @@
 export * from './IssueCategory';
 
 export const IssueType = Object.freeze({
-    VEHICLE: 'Vehicle',
-    DRIVER: 'Driver',
-    ROUTE: 'Route',
+    VEHICLE: 'Vehículo',
+    DRIVER: 'Conductor',
+    ROUTE: 'Ruta',
     PAYLOAD_CARGO: 'Payload Cargo',
     SOFTWARE_TECHNICAL: 'Software Technical',
     OPERATIONAL: 'Operational',
@@ -13,47 +13,47 @@ export const IssueType = Object.freeze({
 });
 
 export const IssuePriority = Object.freeze({
-    LOW: 'Low',
-    MEDIUM: 'Medium',
-    HIGH: 'High',
-    CRITICAL: 'Critical',
-    SCHEDULED_MAINTENANCE: 'Scheduled Maintenance',
-    OPERATIONAL_SUGGESTION: 'Operational Suggestion',
+    LOW: 'Baja',
+    MEDIUM: 'Media',
+    HIGH: 'Alta',
+    CRITICAL: 'Crítica',
+    SCHEDULED_MAINTENANCE: 'Mantenimiento programado',
+    OPERATIONAL_SUGGESTION: 'Sugerencia operativa',
 });
 
 export const IssueStatus = Object.freeze({
-    PENDING: 'Pending',
-    IN_PROGRESS: 'In Progress',
-    BACKLOGGED: 'Backlogged',
-    REQUIRES_UPDATE: 'Requires Update',
-    IN_REVIEW: 'In Review',
-    RE_OPENED: 'Re Opened',
-    DUPLICATE: 'Duplicate',
-    PENDING_REVIEW: 'Pending Review',
-    ESCALATED: 'Escalated',
-    COMPLETED: 'Completed',
-    CANCELED: 'Canceled',
+    PENDING: 'Pendiente',
+    IN_PROGRESS: 'En Progreso',
+    BACKLOGGED: 'Atrasadas',
+    REQUIRES_UPDATE: 'Requiere actualización',
+    IN_REVIEW: 'En Revisión',
+    RE_OPENED: 'Re Abierta',
+    DUPLICATE: 'Duplicada',
+    PENDING_REVIEW: 'Pendiente Revisión',
+    ESCALATED: 'Escalada',
+    COMPLETED: 'Completada',
+    CANCELED: 'Cancelada',
 });
 
 export const FuelReportStatus = Object.freeze({
-    DRAFT: 'Draft',
-    PENDING_APPROVAL: 'Pending Approval',
-    APPROVED: 'Approved',
-    REJECTED: 'Rejected',
-    REVISED: 'Revised',
-    SUBMITTED: 'Submitted',
-    IN_REVIEW: 'In Review',
-    CONFIRMED: 'Confirmed',
-    ARCHIVED: 'Archived',
-    CANCELED: 'Canceled',
+    DRAFT: 'Borrador',
+    PENDING_APPROVAL: 'Pendiente de aprobación',
+    APPROVED: 'Aprobado',
+    REJECTED: 'Rechazado',
+    REVISED: 'Revisado',
+    SUBMITTED: 'Enviado',
+    IN_REVIEW: 'En Revisión',
+    CONFIRMED: 'Confirmado',
+    ARCHIVED: 'Archivado',
+    CANCELED: 'Cancelado',
 });
 
 export const DriverFuelReportStatus = Object.freeze({
-    DRAFT: 'Draft',
-    REVISED: 'Revised',
-    SUBMITTED: 'Submitted',
-    ARCHIVED: 'Archived',
-    CANCELED: 'Canceled',
+    DRAFT: 'Borrador',
+    REVISED: 'Revisado',
+    SUBMITTED: 'Enviado',
+    ARCHIVED: 'Archivado',
+    CANCELED: 'Cancelado',
 });
 
 function convertEnumToArray(enumObj) {

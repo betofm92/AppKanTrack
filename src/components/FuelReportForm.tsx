@@ -1,19 +1,18 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { Text, YStack, Button, Spinner, Input, useTheme } from 'tamagui';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { PortalHost } from '@gorhom/portal';
+import { useNavigation } from '@react-navigation/native';
 import { underscore } from 'inflected';
-import { uppercase } from '../utils/format';
-import { getDriverFuelReportStatuses, FuelReportStatus } from '../constants/Enums';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Button, Input, Spinner, Text, useTheme, YStack } from 'tamagui';
 import BottomSheetSelect from '../components/BottomSheetSelect';
-import UnitInput from '../components/UnitInput';
 import MoneyInput from '../components/MoneyInput';
+import UnitInput from '../components/UnitInput';
+import { FuelReportStatus, getDriverFuelReportStatuses } from '../constants/Enums';
 
-const FuelReportForm = ({ value = {}, onSubmit, isSubmitting = false, submitText = 'Publish Fuel Report' }) => {
+const FuelReportForm = ({ value = {}, onSubmit, isSubmitting = false, submitText = 'Publicar informe de combustible' }) => {
     const theme = useTheme();
     const navigation = useNavigation();
     const insets = useSafeAreaInsets();
@@ -60,7 +59,7 @@ const FuelReportForm = ({ value = {}, onSubmit, isSubmitting = false, submitText
                 <YStack py='$3' space='$4'>
                     <YStack px='$3' space='$2'>
                         <Text color='$textPrimary' fontSize={18} fontWeight='bold' px='$1'>
-                            Status
+                            Estado
                         </Text>
                         <BottomSheetSelect
                             value={fuelReport.status}
@@ -68,7 +67,7 @@ const FuelReportForm = ({ value = {}, onSubmit, isSubmitting = false, submitText
                             optionLabel='value'
                             optionValue='key'
                             onChange={(value) => handleUpdateFuelReport('status', value)}
-                            title='Select Fuel Report Status'
+                            title='Seleccione el estado del informe de combustible'
                             humanize={true}
                             portalHost='FuelReportFormPortal'
                             snapTo='100%'
@@ -77,13 +76,13 @@ const FuelReportForm = ({ value = {}, onSubmit, isSubmitting = false, submitText
                     </YStack>
                     <YStack px='$3' space='$2'>
                         <Text color='$textPrimary' fontSize={18} fontWeight='bold' px='$1'>
-                            Odometer
+                            Odómetro
                         </Text>
                         <Input
                             value={fuelReport.odometer}
                             onChangeText={(text) => handleUpdateFuelReport('odometer', text)}
                             keyboardType='phone-pad'
-                            placeholder='Input your current odometer...'
+                            placeholder='Ingrese su kilometraje actual...'
                             borderWidth={1}
                             color='$textPrimary'
                             borderColor='$borderColor'
@@ -93,7 +92,7 @@ const FuelReportForm = ({ value = {}, onSubmit, isSubmitting = false, submitText
                     </YStack>
                     <YStack px='$3' space='$2'>
                         <Text color='$textPrimary' fontSize={18} fontWeight='bold' px='$1'>
-                            Volume
+                            Volumen
                         </Text>
                         <UnitInput
                             value={fuelReport.volume}
@@ -101,14 +100,14 @@ const FuelReportForm = ({ value = {}, onSubmit, isSubmitting = false, submitText
                                 handleUpdateFuelReport('volume', value);
                                 handleUpdateFuelReport('metric_unit', unit);
                             }}
-                            placeholder='Input fuel volume...'
+                            placeholder='Introduzca el volumen de combustible...'
                             portalHost='FuelReportFormPortal'
                             onBottomSheetPositionChanged={setIsBottomSheetPresenting}
                         />
                     </YStack>
                     <YStack px='$3' space='$2'>
                         <Text color='$textPrimary' fontSize={18} fontWeight='bold' px='$1'>
-                            Cost
+                            Costo
                         </Text>
                         <MoneyInput
                             value={fuelReport.amount}
@@ -117,7 +116,7 @@ const FuelReportForm = ({ value = {}, onSubmit, isSubmitting = false, submitText
                                 handleUpdateFuelReport('amount', value);
                                 handleUpdateFuelReport('currency', currency);
                             }}
-                            placeholder='Input fuel costs...'
+                            placeholder='Costos de combustible de entrada...'
                             portalHost='FuelReportFormPortal'
                             onBottomSheetPositionChanged={setIsBottomSheetPresenting}
                         />

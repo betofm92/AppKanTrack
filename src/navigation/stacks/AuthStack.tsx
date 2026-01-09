@@ -1,9 +1,10 @@
+import { useIsAuthenticated, useIsNotAuthenticated } from '../../contexts/AuthContext';
+import CreateAccountScreen from '../../screens/CreateAccountScreen';
+import CreateAccountVerifyScreen from '../../screens/CreateAccountVerifyScreen';
+import EditAccountPropertyScreen from '../../screens/EditAccountPropertyScreen';
 import LoginScreen from '../../screens/LoginScreen';
 import PhoneLoginScreen from '../../screens/PhoneLoginScreen';
 import PhoneLoginVerifyScreen from '../../screens/PhoneLoginVerifyScreen';
-import CreateAccountScreen from '../../screens/CreateAccountScreen';
-import CreateAccountVerifyScreen from '../../screens/CreateAccountVerifyScreen';
-import { useIsNotAuthenticated, useIsAuthenticated } from '../../contexts/AuthContext';
 
 export const Login = {
     if: useIsNotAuthenticated,
@@ -49,10 +50,19 @@ export const CreateAccountVerify = {
     },
 };
 
+export const EditAccountProperty = {
+    if: useIsAuthenticated, // o useIsNotAuthenticated, según tu caso
+    screen: EditAccountPropertyScreen,
+    options: {
+        headerShown: false,
+    },
+};
+
 export default {
     Login,
     PhoneLogin,
     PhoneLoginVerify,
     CreateAccount,
     CreateAccountVerify,
+    EditAccountProperty,
 };

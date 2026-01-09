@@ -1,50 +1,43 @@
-import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { ScrollView, RefreshControl, SafeAreaView, StyleSheet, Alert, Platform } from 'react-native';
-import { Separator, Button, Image, Stack, Text, YStack, XStack, Spinner, useTheme } from 'tamagui';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faPaperPlane, faPenToSquare, faFlagCheckered, faCheck, faBan } from '@fortawesome/free-solid-svg-icons';
-import { BlurView } from '@react-native-community/blur';
-import { PortalHost } from '@gorhom/portal';
-import LaunchNavigator from 'react-native-launch-navigator';
-import FastImage from 'react-native-fast-image';
 import { Order, Place } from '@fleetbase/sdk';
-import { format as formatDate, formatDistance, add } from 'date-fns';
+import { faBan, faCheck, faFlagCheckered, faPaperPlane, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { PortalHost } from '@gorhom/portal';
+import { useNavigation } from '@react-navigation/native';
+import { format as formatDate } from 'date-fns';
 import { titleize } from 'inflected';
-import { formatCurrency, formatMeters, formatDuration, smartHumanize } from '../utils/format';
-import { restoreFleetbasePlace, getCoordinates } from '../utils/location';
-import { toast } from '../utils/toast';
-import { config, showActionSheet } from '../utils';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Alert, Platform, RefreshControl, ScrollView } from 'react-native';
+import LaunchNavigator from 'react-native-launch-navigator';
+import { Button, Image, Separator, Spinner, Text, useTheme, XStack, YStack } from 'tamagui';
+import Badge from '../components/Badge';
+import { ActionContainer, SectionHeader, SectionInfoLine } from '../components/Content';
+import CurrentDestinationSelect from '../components/CurrentDestinationSelect';
+import DestinationChangedAlert from '../components/DestinationChangedAlert';
+import LiveOrderRoute from '../components/LiveOrderRoute';
+import LoadingOverlay from '../components/LoadingOverlay';
+import OrderActivitySelect from '../components/OrderActivitySelect';
+import OrderCommentThread from '../components/OrderCommentThread';
+import OrderCustomerCard from '../components/OrderCustomerCard';
+import OrderDocumentFiles from '../components/OrderDocumentFiles';
+import OrderPayloadEntities from '../components/OrderPayloadEntities';
+import OrderProgressBar from '../components/OrderProgressBar';
+import OrderProofOfDelivery from '../components/OrderProofOfDelivery';
+import OrderWaypointList from '../components/OrderWaypointList';
+import Spacer from '../components/Spacer';
 import { useAuth } from '../contexts/AuthContext';
-import { useLocation } from '../contexts/LocationContext';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useLocation } from '../contexts/LocationContext';
 import { useOrderManager } from '../contexts/OrderManagerContext';
 import { useTempStore } from '../contexts/TempStoreContext';
-import useSocketClusterClient from '../hooks/use-socket-cluster-client';
-import useStorage from '../hooks/use-storage';
 import useAppTheme from '../hooks/use-app-theme';
+import useFleetbase from '../hooks/use-fleetbase';
 import useOrderResource from '../hooks/use-order-resource';
 import usePromiseWithLoading from '../hooks/use-promise-with-loading';
-import useFleetbase from '../hooks/use-fleetbase';
-import LiveOrderRoute from '../components/LiveOrderRoute';
-import PlaceCard from '../components/PlaceCard';
-import OrderItems from '../components/OrderItems';
-import OrderTotal from '../components/OrderTotal';
-import OrderWaypointList from '../components/OrderWaypointList';
-import OrderPayloadEntities from '../components/OrderPayloadEntities';
-import OrderDocumentFiles from '../components/OrderDocumentFiles';
-import OrderCustomerCard from '../components/OrderCustomerCard';
-import OrderProgressBar from '../components/OrderProgressBar';
-import OrderCommentThread from '../components/OrderCommentThread';
-import OrderProofOfDelivery from '../components/OrderProofOfDelivery';
-import CurrentDestinationSelect from '../components/CurrentDestinationSelect';
-import OrderActivitySelect from '../components/OrderActivitySelect';
-import LoadingOverlay from '../components/LoadingOverlay';
-import DestinationChangedAlert from '../components/DestinationChangedAlert';
-import Badge from '../components/Badge';
-import Spacer from '../components/Spacer';
-import BackButton from '../components/BackButton';
-import { SectionHeader, SectionInfoLine, ActionContainer } from '../components/Content';
+import useSocketClusterClient from '../hooks/use-socket-cluster-client';
+import { config, showActionSheet } from '../utils';
+import { formatDuration, formatMeters, smartHumanize } from '../utils/format';
+import { getCoordinates, restoreFleetbasePlace } from '../utils/location';
+import { toast } from '../utils/toast';
 
 const getOrderDestination = (order, adapter) => {
     const pickup = order.getAttribute('payload.pickup');
@@ -186,11 +179,13 @@ const OrderScreen = ({ route }) => {
 
     const alertDestinationChanged = (previousDestination, currentDestination, order) => {
         return Alert.alert(
-            'Waypoint Completed',
-            `Waypoint activity completed for destination ${previousDestination.getAttribute('address')}. Your current destination is now ${currentDestination.getAttribute('address')}. You can change the destination at anytime by pressing the "Current Destination" button.`,
+            'Punto de referencia completado',
+            `Actividad de punto de ruta completada para el destino ${previousDestination.getAttribute('address')}. 
+            Tu destino actual ahora es ${currentDestination.getAttribute('address')}. 
+            Puedes cambiar el destino en cualquier momento presionando el botón "Destino actual".`,
             [
                 {
-                    text: 'Continue',
+                    text: 'Continuar',
                     isPreferred: true,
                     onPress: () => {
                         return startOrder({ skipDispatch: true });
@@ -256,15 +251,15 @@ const OrderScreen = ({ route }) => {
                 console.warn('Error starting order:', err, err.message);
                 const errorMessage = err.message ?? '';
                 if (errorMessage.startsWith('Order has not been dispatched')) {
-                    return Alert.alert('Order Not Dispatched Yet', 'This order is not yet dispatched, are you sure you want to continue?', [
+                    return Alert.alert('Pedido aún no despachado', 'Este pedido aún no ha sido despachado, ¿estás seguro de que deseas continuar?', [
                         {
-                            text: 'Yes',
+                            text: 'Si',
                             onPress: () => {
                                 return startOrder({ skipDispatch: true });
                             },
                         },
                         {
-                            text: 'Cancel',
+                            text: 'Cancelar',
                             onPress: () => {
                                 return reloadOrder();
                             },
@@ -284,9 +279,9 @@ const OrderScreen = ({ route }) => {
         try {
             const activity = await runWithLoading(order.getNextActivity({ waypoint: destination?.id }), 'nextOrderActivity');
             if (activity.code === 'dispatched') {
-                return Alert.alert('Warning!', 'This order is not yet dispatched, are you sure you want to continue?', [
+                return Alert.alert('¡Advertencia!', 'Este pedido aún no ha sido despachado, ¿estás seguro de que deseas continuar?', [
                     {
-                        text: 'Yes',
+                        text: 'Si',
                         onPress: async () => {
                             try {
                                 const updatedOrder = await order.updateActivity({ skipDispatch: true });
@@ -297,7 +292,7 @@ const OrderScreen = ({ route }) => {
                         },
                     },
                     {
-                        text: 'Cancel',
+                        text: 'Cancelar',
                         onPress: () => {
                             return reloadOrder();
                         },
@@ -331,7 +326,7 @@ const OrderScreen = ({ route }) => {
                 updateOrder(updatedOrder);
                 setNextActivity([]);
                 setLoadingOverlayMessage(null);
-                toast.success(`Order status updated to: ${activity._resolved_status ?? activity.status}`);
+                toast.success(`Estado del pedido actualizado a: ${activity._resolved_status ?? activity.status}`);
 
                 const currentDestination = getOrderDestination(updatedOrder, adapter);
                 const shouldNotifyUserDestinationChanged = activity.complete && updatedOrder.status !== 'completed' && previousDestination?.id !== currentDestination?.id;
@@ -544,13 +539,13 @@ const OrderScreen = ({ route }) => {
                             <XStack flex={1} space='$2' ml={5}>
                                 <Button onPress={handleAdhocAccept} flex={1} bg='$success' borderWidth={1} borderColor='$successBorder' disabled={isAccepting}>
                                     <Button.Icon>{isAccepting ? <Spinner color='$successText' /> : <FontAwesomeIcon icon={faCheck} color={theme.successText.val} />}</Button.Icon>
-                                    <Button.Text color='$successText'>Accept Order</Button.Text>
+                                    <Button.Text color='$successText'>Aceptar Orden</Button.Text>
                                 </Button>
                                 <Button onPress={handleAdhocDismissal} flex={1} bg='$error' borderWidth={1} borderColor='$errorBorder' disabled={isAccepting}>
                                     <Button.Icon>
                                         <FontAwesomeIcon icon={faBan} color={theme.errorText.val} />
                                     </Button.Icon>
-                                    <Button.Text color='$errorText'>Dismiss Order</Button.Text>
+                                    <Button.Text color='$errorText'>Descartar Orden</Button.Text>
                                 </Button>
                             </XStack>
                         )}
@@ -559,7 +554,7 @@ const OrderScreen = ({ route }) => {
                                 <Button.Icon>
                                     {isLoading('startOrder') ? <Spinner color='$successText' /> : <FontAwesomeIcon icon={faFlagCheckered} color={theme.successText.val} />}
                                 </Button.Icon>
-                                <Button.Text color='$successText'>Start Order</Button.Text>
+                                <Button.Text color='$successText'>Empezar Orden</Button.Text>
                             </Button>
                         )}
                         {order.isInProgress && (
@@ -567,13 +562,13 @@ const OrderScreen = ({ route }) => {
                                 <Button.Icon>
                                     {isLoading('nextOrderActivity') ? <Spinner color='successText' /> : <FontAwesomeIcon icon={faPenToSquare} color={theme.infoText.val} />}
                                 </Button.Icon>
-                                <Button.Text color='$successText'>Update Activity</Button.Text>
+                                <Button.Text color='$successText'>Actualizar Actividad</Button.Text>
                             </Button>
                         )}
                         {isNavigatable && (
                             <Button onPress={startNavigation} bg='$info' borderWidth={1} borderColor='$infoBorder'>
                                 <Button.Icon>{isLoading('startNavigation') ? <Spinner color='$infoText' /> : <FontAwesomeIcon icon={faPaperPlane} color={theme.infoText.val} />}</Button.Icon>
-                                <Button.Text color='$infoText'>Start Navigation</Button.Text>
+                                <Button.Text color='$infoText'>Empezar Navigación</Button.Text>
                             </Button>
                         )}
                     </XStack>
@@ -613,11 +608,11 @@ const OrderScreen = ({ route }) => {
                         </YStack>
                     ))}
                 </YStack>
-                <SectionHeader title='Order Route' />
+                <SectionHeader title='Ruta de Orden' />
                 <YStack px='$3' py='$4'>
                     <OrderWaypointList order={order} />
                 </YStack>
-                <SectionHeader title='Order Progress' />
+                <SectionHeader title='Progreso de Orden' />
                 <YStack>
                     <YStack px='$3' py='$4'>
                         <OrderProgressBar
@@ -628,28 +623,28 @@ const OrderScreen = ({ route }) => {
                         />
                     </YStack>
                     <YStack pb='$3'>
-                        <SectionInfoLine title='Current Destination' value={trackerData.current_destination?.address} />
+                        <SectionInfoLine title='Destino Actual' value={trackerData.current_destination?.address} />
                         <Separator />
-                        <SectionInfoLine title='Next Destination' value={trackerData.next_destination?.address} />
+                        <SectionInfoLine title='Siguiente Destino' value={trackerData.next_destination?.address} />
                         <Separator />
-                        <SectionInfoLine title='Total Distance' value={formatMeters(trackerData.total_distance)} />
+                        <SectionInfoLine title='Distancia Total' value={formatMeters(trackerData.total_distance)} />
                         <Separator />
-                        <SectionInfoLine title='Start Time' value={trackerData.start_time ? '-' : trackerData.start_time} />
+                        <SectionInfoLine title='Hora de inicio' value={trackerData.start_time ? '-' : trackerData.start_time} />
                         <Separator />
-                        <SectionInfoLine title='Current ETA' value={trackerData.current_destination_eta === -1 ? 'N/A' : formatDuration(trackerData.current_destination_eta)} />
+                        <SectionInfoLine title='ETA actual' value={trackerData.current_destination_eta === -1 ? 'N/A' : formatDuration(trackerData.current_destination_eta)} />
                         <Separator />
                         <SectionInfoLine title='ECT' value={trackerData.estimated_completion_time_formatted} />
                     </YStack>
                 </YStack>
-                <SectionHeader title='Order Notes' />
+                <SectionHeader title='Notas de Orden' />
                 <YStack px='$3' py='$4'>
                     <Text color='$textPrimary'>{order.getAttribute('notes', 'N/A') ?? 'N/A'}</Text>
                 </YStack>
-                <SectionHeader title='Order Proof' />
+                <SectionHeader title='Pruebas de Orden' />
                 <YStack>
                     <OrderProofOfDelivery order={order} />
                 </YStack>
-                <SectionHeader title='Order Payload' />
+                <SectionHeader title='Carga útil de Orden' />
                 <YStack>
                     <OrderPayloadEntities order={order} onPress={({ entity, waypoint }) => navigation.navigate('Entity', { entity, waypoint })} />
                 </YStack>
@@ -661,11 +656,11 @@ const OrderScreen = ({ route }) => {
                         </YStack>
                     </>
                 )}
-                <SectionHeader title='Order Documents & Files' />
+                <SectionHeader title='Documentos y Archivos de Orden' />
                 <YStack>
                     <OrderDocumentFiles order={order} />
                 </YStack>
-                <SectionHeader title='Order Comments' />
+                <SectionHeader title='Comentarios de Orden' />
                 <YStack px='$2' py='$4'>
                     <OrderCommentThread order={order} />
                 </YStack>

@@ -90,11 +90,11 @@ export const volumes = [
         value: 'dm',
     },
     {
-        name: 'Liter',
+        name: 'Litro',
         value: 'L',
     },
     {
-        name: 'Gallon (US)',
+        name: 'Galón (US)',
         value: 'gal',
     },
     {

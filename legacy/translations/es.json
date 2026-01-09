@@ -1,0 +1,189 @@
+{
+    "Account": {
+        "AccountScreen": {
+            "title": "Crear una cuenta o iniciar sesión",
+            "loginButtonText": "Iniciar Sesión",
+            "createAccountButtonText": "Crear Cuenta",
+            "userGreetingTitle": "Hola, {{driverName}}",
+            "accountMenuTitle": "Mi Cuenta",
+            "config": "Configuración de Instancia",
+            "organization": "Organizaciones",
+            "profileLinkText": "Perfil",
+            "ordersLinkText": "Pedidos",
+            "placesLinkText": "Lugares",
+            "signoutButtonText": "Cerrar Sesión"
+        },
+        "EditProfileScreen": {
+            "title": "Tu perfil",
+            "nameLabelText": "Tu nombre",
+            "emailLabelText": "Tu dirección de correo electrónico",
+            "phoneLabelText": "Tu número móvil",
+            "saveButtonText": "Guardar Perfil"
+        },
+        "OrganizationScreen": {
+            "title": "Organizaciones",
+            "empty": "Sin organizaciones"
+        }
+    },
+    "Auth": {
+        "LoginScreen": {
+            "title": "Iniciar Sesión",
+            "sendVerificationCodeButtonText": "Enviar Código de Verificación",
+            "createAccountButtonText": "o Crear Cuenta",
+            "retryButtonText": "¿Reintentar?",
+            "verifyCodeButtonText": "Verificar Código",
+            "codeInputPlaceholder": "Ingresar código de verificación"
+        },
+        "SignUpScreen": {
+            "driver": "Convertirse en Conductor",
+            "sign": "Crear cuenta de conductor",
+            "driverName": "Nombre",
+            "phoneNumber": "Número de Teléfono",
+            "driverLicense": "Número de Licencia de Conducir",
+            "email": "Dirección de Correo Electrónico",
+            "document": "Subir Documento",
+            "save": "Guardar",
+            "empty": "No hay organizaciones para mostrar"
+        },
+        "OrganizationsScreen": {
+            "searchInputPlaceholderText": "Buscar Organizaciones..."
+        }
+    },
+    "Core": {
+        "BootScreen": {},
+        "NetworkScreen": {},
+        "SearchScreen": {
+            "searchInputPlaceholderText": "Buscar Pedidos..."
+        },
+        "NavigatorScreen": {},
+        "IssueScreen": {
+            "issues": "Incidencias",
+            "type": "Tipo de Incidencia",
+            "selectType": "Seleccionar Tipo",
+            "category": "Categoría de Incidencia",
+            "categoryType": "Seleccionar Categoría",
+            "issueReport": "Informe de Incidencia",
+            "selectPriority": "Seleccionar Prioridad",
+            "selectStatus": "Seleccionar Estado",
+            "priority": "Prioridad de Incidencia",
+            "status": "Estado de Incidencia",
+            "saveIssue": "Guardar Incidencia",
+            "deleteIssue": "Eliminar",
+            "createIssue": "Crear Incidencia",
+            "updateIssue": "Actualizar Incidencia",
+            "report": "Informar",
+            "driverName": "Nombre del Conductor",
+            "vehicleName": "Nombre del Vehículo"
+        },
+        "ChannelScreen": {
+            "name": "Nombre",
+            "title": "Crear canal",
+            "update": "Actualizar",
+            "update-channel": "Actualizar canal"
+        },
+        "ChatsScreen": {
+            "delete": "Eliminar",
+            "create-channel": "Crear canal"
+        },
+        "ChatScreen": {
+            "title": "Seleccionar Usuario"
+        },
+        "SettingsScreen": {
+            "title": "Actualizar detalles de entidad",
+            "name": "Nombre",
+            "description": "Descripción",
+            "sku": "SKU",
+            "height": "Altura",
+            "width": "Ancho",
+            "length": "Longitud",
+            "weight": "Peso",
+            "declared_value": "Valor Declarado",
+            "sale_price": "Precio de Venta",
+            "empty": "El conductor actualmente no tiene un campo que permita actualizar los detalles de la organización",
+            "save": "Guardar",
+            "update": "Actualizar Detalles"
+        }
+    },
+    "Exceptions": {
+        "SetupWarningScreen": {
+            "title": "¡Configuraciones Faltantes!",
+            "subtitle": "Parece que no has configurado correctamente tu aplicación.",
+            "envMissingText": "¡falta en el entorno!"
+        }
+    },
+    "Shared": {
+        "OrderCompletedScreen": {
+            "title": "¡Pedido recibido!",
+            "pickupOrderFrom": "Recoger pedido de",
+            "orderNotes": "Notas del Pedido",
+            "qrCode": "Código QR",
+            "orderSummary": "Resumen del Pedido",
+            "cash": "Efectivo",
+            "subtotal": "Subtotal",
+            "deliveryFee": "Tarifa de Entrega",
+            "tip": "Propina",
+            "deliveryTip": "Propina de Entrega",
+            "total": "Total"
+        },
+        "OrderScreen": {
+            "title": "Pedido {{orderStatus}}",
+            "arrivingIn": "Llegando en {{estimatedDuration}}",
+            "pickupOrderFrom": "Recoger pedido de",
+            "orderNotes": "Notas del Pedido",
+            "qrCode": "Código QR",
+            "orderSummary": "Resumen del Pedido",
+            "cash": "Efectivo",
+            "subtotal": "Subtotal",
+            "deliveryFee": "Tarifa de Entrega",
+            "tip": "Propina",
+            "deliveryTip": "Propina de Entrega",
+            "total": "Total"
+        },
+        "ConfigScreen": {
+            "title": "Configuración de Instancia",
+            "host": "Host",
+            "socket": "Host del Socket",
+            "port": "Puerto del Socket",
+            "reset": "Restablecer",
+            "save": "Guardar"
+        }
+    },
+    "components": {
+        "interface": {
+            "headers": {
+                "DefaultHeader": {
+                    "search": "Buscar"
+                }
+            },
+            "LangPicker": {
+                "title": "Seleccionar idioma"
+            },
+            "MapPicker": {
+                "title": "Seleccionar Mapa"
+            },
+            "PhoneInput": {
+                "selectCountry": "Seleccionar País"
+            }
+        }
+    },
+    "terms": {
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "loading": "Cargando...",
+        "searching": "Buscando...",
+        "more": "Más",
+        "sort": "Ordenar",
+        "filter": "Filtrar",
+        "date": "Fecha",
+        "search": "Buscar"
+    },
+    "status": {
+        "created": "Creado",
+        "preparing": "Preparando",
+        "dispatched": "Despachado",
+        "driver_enroute": "Conductor en ruta",
+        "pending": "Pendiente",
+        "in_progress": "En progreso",
+        "completed": "Completado"
+    }
+}

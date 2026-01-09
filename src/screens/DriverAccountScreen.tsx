@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { SafeAreaView, FlatList, Pressable, ScrollView, Platform, Linking } from 'react-native';
-import { Spinner, Avatar, Text, YStack, XStack, Separator, Button, useTheme } from 'tamagui';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { toast, ToastPosition } from '@backpackapp-io/react-native-toast';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { showActionSheet, abbreviateName } from '../utils';
-import { titleize } from '../utils/format';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
+import { FlatList, Linking, Platform, Pressable, SafeAreaView, ScrollView } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { Avatar, Button, Separator, Spinner, Text, useTheme, XStack, YStack } from 'tamagui';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import useAppTheme from '../hooks/use-app-theme';
-import DeviceInfo from 'react-native-device-info';
+import { abbreviateName, showActionSheet } from '../utils';
+import { titleize } from '../utils/format';
 import storage from '../utils/storage';
 
 const DriverAccountScreen = () => {
@@ -274,11 +274,11 @@ const DriverAccountScreen = () => {
             rightComponent: null,
             onPress: handleOpenPrivacyPolicy,
         },
-        {
-            title: t('AccountScreen.clearCache'),
-            rightComponent: null,
-            onPress: handleClearCache,
-        },
+        // {
+        //     title: t('AccountScreen.clearCache'),
+        //     rightComponent: null,
+        //     onPress: handleClearCache,
+        // },
         // {
         //     title: t('AccountScreen.tracking'),
         //     rightComponent: <Text color='$textSecondary'>Enabled</Text>, // Replace with dynamic value if available

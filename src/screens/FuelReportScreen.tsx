@@ -1,21 +1,18 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Alert } from 'react-native';
-import { Text, YStack, XStack, Button, Spinner, Separator, useTheme } from 'tamagui';
 import { Place } from '@fleetbase/sdk';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faTimes, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Portal } from '@gorhom/portal';
-import { humanize, titleize } from 'inflected';
-import { formatCurrency } from '../utils/format';
-import { isResource } from '../utils';
-import { useTempStore } from '../contexts/TempStoreContext';
+import { useNavigation } from '@react-navigation/native';
+import { useCallback, useState } from 'react';
+import { Alert } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Separator, Text, useTheme, XStack, YStack } from 'tamagui';
 import Badge from '../components/Badge';
-import LoadingOverlay from '../components/LoadingOverlay';
 import HeaderButton from '../components/HeaderButton';
+import LoadingOverlay from '../components/LoadingOverlay';
 import PlaceMapView from '../components/PlaceMapView';
+import { useTempStore } from '../contexts/TempStoreContext';
 import useFleetbase from '../hooks/use-fleetbase';
+import { formatCurrency } from '../utils/format';
 
 const FuelReportScreen = () => {
     const theme = useTheme();
@@ -42,9 +39,9 @@ const FuelReportScreen = () => {
             }
         };
 
-        Alert.alert('Confirm Deletion', 'Are you sure you want to delete this Fuel Report?', [
-            { text: 'Cancel', style: 'cancel' },
-            { text: 'Delete Fuel Report', onPress: handleDelete },
+        Alert.alert('Confirmar eliminación', '¿Está seguro de que desea eliminar este informe de combustible?', [
+            { text: 'Cancelar', style: 'cancel' },
+            { text: 'Eliminar informe de combustible', onPress: handleDelete },
         ]);
     }, [adapter]);
 
@@ -64,12 +61,12 @@ const FuelReportScreen = () => {
                     <HeaderButton icon={faTimes} onPress={() => navigation.goBack()} />
                 </XStack>
             </Portal>
-            <LoadingOverlay visible={isLoading} text='Deleting Fuel Report...' />
+            <LoadingOverlay visible={isLoading} text='Eliminando informe de combustible...' />
             <YStack py='$3' space='$3'>
                 <XStack px='$3' alignItems='center' space='$3'>
                     <YStack alignItems='flex-start'>
                         <Text color='$textSecondary' fontSize={17} fontWeight='bold'>
-                            Odometer:
+                            Odómetro:
                         </Text>
                     </YStack>
                     <YStack flex={1} alignItems='flex-end'>
@@ -82,7 +79,7 @@ const FuelReportScreen = () => {
                 <XStack px='$3' alignItems='center' space='$3'>
                     <YStack alignItems='flex-start'>
                         <Text color='$textSecondary' fontSize={17} fontWeight='bold'>
-                            Volume:
+                            Volumen:
                         </Text>
                     </YStack>
                     <YStack flex={1} alignItems='flex-end'>
@@ -95,7 +92,7 @@ const FuelReportScreen = () => {
                 <XStack px='$3' alignItems='center' space='$3'>
                     <YStack alignItems='flex-start'>
                         <Text color='$textSecondary' fontSize={17} fontWeight='bold'>
-                            Vehicle:
+                            Vehículo:
                         </Text>
                     </YStack>
                     <YStack flex={1} alignItems='flex-end'>
@@ -108,7 +105,7 @@ const FuelReportScreen = () => {
                 <XStack px='$3' alignItems='center' space='$3'>
                     <YStack alignItems='flex-start'>
                         <Text color='$textSecondary' fontSize={17} fontWeight='bold'>
-                            Cost:
+                            Costo:
                         </Text>
                     </YStack>
                     <YStack flex={1} alignItems='flex-end'>
@@ -121,7 +118,7 @@ const FuelReportScreen = () => {
                 <XStack px='$3' alignItems='center' space='$3'>
                     <YStack alignItems='flex-start'>
                         <Text color='$textSecondary' fontSize={17} fontWeight='bold'>
-                            Status:
+                            Estado:
                         </Text>
                     </YStack>
                     <YStack flex={1} alignItems='flex-end'>
@@ -132,7 +129,7 @@ const FuelReportScreen = () => {
                 <YStack px='$3' space='$3'>
                     <YStack alignItems='flex-start'>
                         <Text color='$textSecondary' fontSize={17} fontWeight='bold'>
-                            Report Location:
+                            Ubicación reportada:
                         </Text>
                     </YStack>
                     <YStack flex={1} alignItems='flex-start'>

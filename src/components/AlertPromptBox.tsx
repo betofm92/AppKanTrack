@@ -1,7 +1,7 @@
-import { Alert } from 'react-native';
-import { View, Text, Button, YStack, XStack, useTheme } from 'tamagui';
+import { faCheck, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faTriangleExclamation, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { Alert } from 'react-native';
+import { Button, Text, XStack, YStack, useTheme } from 'tamagui';
 
 interface AlertPromptBoxProps {
     show: boolean;
@@ -29,7 +29,7 @@ const AlertPromptBox: React.FC<AlertPromptBoxProps> = ({
     const theme = useTheme();
     const handlePress = () => {
         Alert.alert(confirmTitle, confirmMessage, [
-            { text: 'Cancel', style: 'cancel' },
+            { text: 'Cancelar', style: 'cancel' },
             { text: confirmAlertButtonText, onPress: () => onConfirm() },
         ]);
     };

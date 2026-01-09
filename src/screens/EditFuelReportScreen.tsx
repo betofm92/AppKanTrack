@@ -1,12 +1,12 @@
-import React, { useState, useCallback } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { YStack } from 'tamagui';
 import { underscore } from 'inflected';
+import { useCallback, useState } from 'react';
+import { YStack } from 'tamagui';
+import FuelReportForm from '../components/FuelReportForm';
 import { useAuth } from '../contexts/AuthContext';
 import { useTempStore } from '../contexts/TempStoreContext';
-import { later } from '../utils';
 import useFleetbase from '../hooks/use-fleetbase';
-import FuelReportForm from '../components/FuelReportForm';
+import { later } from '../utils';
 
 const EditFuelReportScreen = () => {
     const navigation = useNavigation();
@@ -41,7 +41,7 @@ const EditFuelReportScreen = () => {
 
     return (
         <YStack flex={1} bg='$background'>
-            <FuelReportForm value={fuelReport} onSubmit={handleUpdateReport} isSubmitting={isLoading} submitText='Update Fuel Report' />
+            <FuelReportForm value={fuelReport} onSubmit={handleUpdateReport} isSubmitting={isLoading} submitText='Actualizar informe de combustible' />
         </YStack>
     );
 };

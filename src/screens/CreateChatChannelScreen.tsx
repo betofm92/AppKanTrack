@@ -1,18 +1,15 @@
-import { useRef, useEffect, useCallback, useState, useMemo, memo } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { FlatList, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard, Platform, Alert } from 'react-native';
-import { Text, Input, YStack, XStack, Button, Avatar, Separator, Spinner, useTheme } from 'tamagui';
-import { PortalHost } from '@gorhom/portal';
+import { faCheck, faChevronLeft, faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faPlus, faTimes, faCheck, faChevronLeft, faSave } from '@fortawesome/free-solid-svg-icons';
-import { last, abbreviateName, later } from '../utils';
-import { formatWhatsAppTimestamp } from '../utils/format';
-import { toast } from '../utils/toast';
-import { useChat } from '../contexts/ChatContext';
-import { useAuth } from '../contexts/AuthContext';
-import useSocketClusterClient from '../hooks/use-socket-cluster-client';
+import { useNavigation } from '@react-navigation/native';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Alert, FlatList, Keyboard, KeyboardAvoidingView, Platform, TouchableWithoutFeedback } from 'react-native';
+import { Button, Input, Separator, Spinner, Text, useTheme, XStack, YStack } from 'tamagui';
 import ChatParticipantAvatar from '../components/ChatParticipantAvatar';
 import Spacer from '../components/Spacer';
+import { useAuth } from '../contexts/AuthContext';
+import { useChat } from '../contexts/ChatContext';
+import useSocketClusterClient from '../hooks/use-socket-cluster-client';
+import { toast } from '../utils/toast';
 
 const CreateChatChannelScreen = ({ route }) => {
     const theme = useTheme();
@@ -36,14 +33,14 @@ const CreateChatChannelScreen = ({ route }) => {
 
     const handleCreateChat = useCallback(async () => {
         if (!channelName.trim()) {
-            return Alert.alert('Chat channel name is required.');
+            return Alert.alert('El nombre del canal de chat es obligatorio.');
         }
 
         setIsLoading(true);
 
         try {
             await createChannel({ name: channelName, participants: [driver.getAttribute('user'), ...selectedParticipants] });
-            toast.success(`New chat channel created: ${channelName}`);
+            toast.success(`Se ha creado un nuevo canal de chat: ${channelName}`);
             navigation.goBack();
         } catch (err) {
             console.warn('Error creating new chat channel:', err);
@@ -95,14 +92,14 @@ const CreateChatChannelScreen = ({ route }) => {
                                 <Button.Icon>
                                     <FontAwesomeIcon icon={faTimes} color={theme['$errorText'].val} />
                                 </Button.Icon>
-                                <Button.Text color='$errorText'>Unselect</Button.Text>
+                                <Button.Text color='$errorText'>Deseleccionar</Button.Text>
                             </Button>
                         ) : (
                             <Button size='$2' bg='$success' borderWidth={1} borderColor='$successBorder' onPress={() => handleSelectParticipant(participant)}>
                                 <Button.Icon>
                                     <FontAwesomeIcon icon={faCheck} color={theme['$successText'].val} />
                                 </Button.Icon>
-                                <Button.Text color='$successText'>Select</Button.Text>
+                                <Button.Text color='$successText'>Seleccionar</Button.Text>
                             </Button>
                         )}
                     </YStack>
@@ -126,7 +123,7 @@ const CreateChatChannelScreen = ({ route }) => {
                             </YStack>
                             <YStack>
                                 <Text color='$textPrimary' fontSize={24} fontWeight='bold'>
-                                    Create new Chat
+                                    Crear nuevo Chat
                                 </Text>
                             </YStack>
                         </XStack>
@@ -134,12 +131,12 @@ const CreateChatChannelScreen = ({ route }) => {
                     <YStack mt='$5' pb='$2'>
                         <YStack px='$3' space='$2'>
                             <Text color='$textPrimary' fontSize={18} fontWeight='bold' px='$1'>
-                                Channel Name
+                                Nombre del canal
                             </Text>
                             <Input
                                 value={channelName}
                                 onChangeText={setChannelName}
-                                placeholder='Input chat channel name...'
+                                placeholder='Nombre del canal de chat...'
                                 borderWidth={1}
                                 color='$textPrimary'
                                 borderColor='$borderColor'
@@ -150,7 +147,7 @@ const CreateChatChannelScreen = ({ route }) => {
                     </YStack>
                     <YStack mt='$4' px='$3' space='$2'>
                         <Text color='$textPrimary' fontSize={18} fontWeight='bold' px='$1'>
-                            Select Participants:
+                            Seleccionar participantes:
                         </Text>
                     </YStack>
                 </YStack>
@@ -169,7 +166,7 @@ const CreateChatChannelScreen = ({ route }) => {
                 <YStack bg='$background' borderTopWidth={1} borderColor='$borderColorWithShadow' px='$3' py='$4'>
                     <Button size='$5' bg='$success' borderWidth={1} borderColor='$successBorder' onPress={handleCreateChat}>
                         <Button.Icon>{isLoading ? <Spinner /> : <FontAwesomeIcon icon={faSave} color={theme['$successText'].val} />}</Button.Icon>
-                        <Button.Text color='$successText'>Create new Chat</Button.Text>
+                        <Button.Text color='$successText'>Crear nuevo Chat</Button.Text>
                     </Button>
                     <Spacer height={25} />
                 </YStack>

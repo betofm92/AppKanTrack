@@ -1,13 +1,13 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import { toast } from '@backpackapp-io/react-native-toast';
 import { useNavigation } from '@react-navigation/native';
-import { SafeAreaView, Pressable, Keyboard, StyleSheet } from 'react-native';
-import { Spinner, Text, YStack, XStack, Button, useTheme } from 'tamagui';
-import { toast, ToastPosition } from '@backpackapp-io/react-native-toast';
+import { useCallback, useState } from 'react';
+import { Keyboard, Pressable, SafeAreaView, StyleSheet } from 'react-native';
+import { Button, Spinner, Text, useTheme, XStack, YStack } from 'tamagui';
+import BackButton from '../components/BackButton';
+import Input from '../components/Input';
+import PhoneInput from '../components/PhoneInput';
 import { useAuth } from '../contexts/AuthContext';
 import { usePromiseWithLoading } from '../hooks/use-promise-with-loading';
-import BackButton from '../components/BackButton';
-import PhoneInput from '../components/PhoneInput';
-import Input from '../components/Input';
 
 const RenderAccountProperty = ({ property, value, onChange }) => {
     return (
@@ -60,7 +60,7 @@ const EditAccountPropertyScreen = ({ route }) => {
                     <Button onPress={handleUpdateProperty} size='$5' bg='$primary' flex={1} opacity={mutated ? 1 : 0.75} disabled={!mutated}>
                         <Button.Icon>{isLoading() && <Spinner color='$textPrimary' />}</Button.Icon>
                         <Button.Text color='$textPrimary' fontWeight='bold' fontSize='$5'>
-                            Save
+                            Guardar
                         </Button.Text>
                     </Button>
                 </XStack>

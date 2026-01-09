@@ -1,13 +1,13 @@
-import React, { createContext, useContext, useReducer, useMemo, useEffect, useCallback, useRef } from 'react';
+import { Driver } from '@fleetbase/sdk';
+import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useRef } from 'react';
 import { Platform } from 'react-native';
 import { EventRegister } from 'react-native-event-listeners';
-import { Driver } from '@fleetbase/sdk';
-import { later, isArray, navigatorConfig } from '../utils';
-import useStorage, { storage } from '../hooks/use-storage';
+import { LoginManager as FacebookLoginManager } from 'react-native-fbsdk-next';
 import useFleetbase from '../hooks/use-fleetbase';
+import useStorage, { storage } from '../hooks/use-storage';
+import { later, navigatorConfig } from '../utils';
 import { useLanguage } from './LanguageContext';
 import { useNotification } from './NotificationContext';
-import { LoginManager as FacebookLoginManager } from 'react-native-fbsdk-next';
 
 const AuthContext = createContext();
 
@@ -217,6 +217,7 @@ export const AuthProvider = ({ children }) => {
     // Create Account: Verify Code
     const verifyAccountCreation = useCallback(
         async (phone, code, attributes = {}) => {
+            console.log('verify ');
             dispatch({ type: 'VERIFY', isVerifyingCode: true });
             try {
                 const driver = await fleetbase.drivers.create(phone, code, attributes);
@@ -235,14 +236,17 @@ export const AuthProvider = ({ children }) => {
     // Login: Send verification code
     const login = useCallback(
         async (phone) => {
-            dispatch({ type: 'LOGIN', phone, isSendingCode: true });
+            //console.log('init:', phone, fleetbase);
+            dispatch({ type: 'LOGIN', phone, isSendingCode: false });
             try {
                 const { method } = await fleetbase.drivers.login(phone);
-                dispatch({ type: 'LOGIN', phone, isSendingCode: false, loginMethod: method ?? 'sms' });
+                console.log('method:', method);
+                dispatch({ type: 'LOGIN', phone, isSendingCode: false, loginMethod: method });
             } catch (error) {
                 dispatch({ type: 'LOGIN', phone, isSendingCode: false });
-                console.warn('[AuthContext] Login failed:', error);
-                throw error;
+                console.warn('[AuthContext] Login faileddd:', error, phone);
+                return;
+                //throw error;
             }
         },
         [fleetbase]
@@ -262,6 +266,7 @@ export const AuthProvider = ({ children }) => {
     const verifyCode = useCallback(
         async (code) => {
             dispatch({ type: 'VERIFY', isVerifyingCode: true });
+            console.log('verify ', code);
             try {
                 const driver = await fleetbase.drivers.verifyCode(state.phone, code);
                 createDriverSession(driver);

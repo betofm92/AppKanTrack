@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useMemo, useRef, useCallback, useImperativeHandle, forwardRef } from 'react';
-import { FlatList, TextInput, Keyboard } from 'react-native';
-import BottomSheet, { BottomSheetView, BottomSheetFlatList, BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import { useTheme, View, Text, Button, XStack, YStack, Input } from 'tamagui';
+import BottomSheet, { BottomSheetFlatList, BottomSheetTextInput, BottomSheetView } from '@gorhom/bottom-sheet';
 import { Portal } from '@gorhom/portal';
 import { titleize as titleizeString } from 'inflected';
+import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import { Keyboard } from 'react-native';
+import { Button, Text, useTheme, YStack } from 'tamagui';
 import useAppTheme from '../hooks/use-app-theme';
 
 const BottomSheetSelect = forwardRef(
@@ -16,8 +16,8 @@ const BottomSheetSelect = forwardRef(
             optionValue,
             optionLabel,
             renderOption,
-            placeholder = 'Select an option',
-            searchPlaceholder = 'Search options',
+            placeholder = 'Seleccione una opción',
+            searchPlaceholder = 'Opciones de búsqueda',
             title,
             portalHost = 'MainPortal',
             snapTo = '90%',

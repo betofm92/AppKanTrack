@@ -1,13 +1,11 @@
-import BackgroundGeolocation from 'react-native-background-geolocation';
-import { Platform } from 'react-native';
-import { EventRegister } from 'react-native-event-listeners';
-import { checkMultiple, request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import { GoogleAddress, Place, Point } from '@fleetbase/sdk';
 import { StoreLocation } from '@fleetbase/storefront';
-import { haversine } from './math';
-import { config, uniqueArray, isObject, isArray, isEmpty, isResource, isSerializedResource, isPojoResource } from './';
-import storage from './storage';
 import axios from 'axios';
+import BackgroundGeolocation from 'react-native-background-geolocation';
+import { EventRegister } from 'react-native-event-listeners';
+import { config, isArray, isEmpty, isObject, isPojoResource, isResource, isSerializedResource, uniqueArray } from './';
+import { haversine } from './math';
+import storage from './storage';
 
 const emit = EventRegister.emit;
 
@@ -225,21 +223,40 @@ export async function getLiveLocation(adapter) {
                 },
             },
             async (position) => {
-                const { latitude, longitude } = position.coords;
+                //const { latitude, longitude } = position.coords;
+
+                const { latitude, longitude, speed, heading, altitude } = position.coords;
 
                 // Save the last known coordinates
                 storage.setArray('_last_known_position', [latitude, longitude]);
 
                 try {
                     const details = await geocode(latitude, longitude);
-                    const place = createFleetbasePlaceFromDetails(details, { position }, adapter);
+                    const place = createFleetbasePlaceFromDetails(
+                        details,
+                        {
+                            position,
+                            speed,
+                            heading,
+                            altitude,
+                        },
+                        adapter
+                    );
 
                     // Save the last known location
                     storage.setMap('_last_known_location', place.serialize());
 
                     resolve(place);
                 } catch (error) {
-                    const place = new Place({ location: new Point(latitude, longitude), meta: { position } });
+                    const place = new Place({
+                        location: new Point(latitude, longitude),
+                        meta: {
+                            position,
+                            speed,
+                            heading,
+                            altitude,
+                        },
+                    });
 
                     // Save the last known location
                     storage.setMap('_last_known_location', place.serialize());

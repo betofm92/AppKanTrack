@@ -1,7 +1,7 @@
-import getCurrency from './currencies';
 import countryLocaleMap from 'country-locale-map';
-import { isNone, isArray, isObject, defaults } from './';
-import { isToday, isYesterday, isThisWeek, isThisYear, format, differenceInMinutes, differenceInHours } from 'date-fns';
+import { differenceInHours, differenceInMinutes, format, isThisWeek, isThisYear, isToday, isYesterday } from 'date-fns';
+import { defaults, isArray, isNone, isObject } from './';
+import getCurrency from './currencies';
 
 export const defaultCurrenyOptions = {
     symbol: '$', // default currency symbol is '$'
@@ -157,7 +157,7 @@ export function formatCurrency(amount = 0, currency = 'USD', currencyDisplay = '
 
 export function formatMeters(meters) {
     if (meters < 1000) {
-        return `${meters} meters`;
+        return `${meters} metros`;
     } else {
         const km = meters / 1000;
         // Round to one decimal place
@@ -171,10 +171,10 @@ export function formatMiles(meters) {
     const miles = meters / 1609.344;
     if (miles < 1) {
         // Use two decimals for values under 1 mile
-        return `${miles.toFixed(2)} miles`;
+        return `${miles.toFixed(2)} millas`;
     } else {
         // Use one decimal place for values 1 mile or more
-        return `${miles.toFixed(1)} miles`;
+        return `${miles.toFixed(1)} millas`;
     }
 }
 
@@ -378,12 +378,12 @@ export function formatWhatsAppTimestamp(date) {
 
     // Less than 1 minute ago
     if (minutesDiff < 1) {
-        return 'Just now';
+        return 'Justo ahora';
     }
 
     // Less than 60 minutes ago
     if (minutesDiff < 60) {
-        return `${minutesDiff} minute${minutesDiff > 1 ? 's' : ''} ago`;
+        return `${minutesDiff} minuto${minutesDiff > 1 ? 's' : ''} atrás`;
     }
 
     // Same day
@@ -393,7 +393,7 @@ export function formatWhatsAppTimestamp(date) {
 
     // Yesterday
     if (isYesterday(date)) {
-        return 'Yesterday';
+        return 'Ayer';
     }
 
     // Within the current week (not including today or yesterday)

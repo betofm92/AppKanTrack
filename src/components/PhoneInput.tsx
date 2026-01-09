@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import { FlatList, TextInput, Keyboard } from 'react-native';
-import { countries, getEmojiFlag } from 'countries-list';
-import BottomSheet, { BottomSheetView, BottomSheetFlatList, BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import { useTheme, View, Text, Button, XStack, YStack, Input } from 'tamagui';
+import BottomSheet, { BottomSheetFlatList, BottomSheetTextInput, BottomSheetView } from '@gorhom/bottom-sheet';
 import { Portal } from '@gorhom/portal';
-import { getCountryByPhoneCode, getCountryByISO2, parsePhoneNumber, debounce } from '../utils';
+import { countries, getEmojiFlag } from 'countries-list';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Keyboard } from 'react-native';
+import { Button, Input, Text, useTheme, XStack, YStack } from 'tamagui';
 import useAppTheme from '../hooks/use-app-theme';
+import { getCountryByISO2, parsePhoneNumber } from '../utils';
 
-function getDefaultValues(value = null, fallbackCountry = 'US') {
+function getDefaultValues(value = null, fallbackCountry = 'EC') {
     if (typeof value === 'string' && value.startsWith('+')) {
         const segments = parsePhoneNumber(value);
         return {
@@ -30,7 +30,7 @@ const countryList = Object.entries(countries).map(([code, details]) => ({
     emoji: getEmojiFlag(code),
 }));
 
-const PhoneInput = ({ value, onChange, bg, width = '100%', defaultCountryCode = 'US', size = '$5', wrapperProps = {} }) => {
+const PhoneInput = ({ value, onChange, bg, width = '100%', defaultCountryCode = 'EC', size = '$5', wrapperProps = {} }) => {
     const defaultValue = getDefaultValues(value, defaultCountryCode);
     const theme = useTheme();
     const { isDarkMode } = useAppTheme();
@@ -71,22 +71,29 @@ const PhoneInput = ({ value, onChange, bg, width = '100%', defaultCountryCode = 
         closeBottomSheet();
     };
 
-    useEffect(() => {
+    const fixedCountry = getCountryByISO2('EC');
+
+    /*useEffect(() => {
         if (onChange) {
             const combinedValue = `+${selectedCountry.phone}${phoneNumber}`;
             onChange(combinedValue, phoneNumber, selectedCountry);
         }
-    }, [selectedCountry, phoneNumber, onChange]);
+    }, [selectedCountry, phoneNumber, onChange]);*/
+
+    useEffect(() => {
+        if (onChange) {
+            const combinedValue = `+${fixedCountry.phone}${phoneNumber}`;
+            onChange(combinedValue, phoneNumber, fixedCountry);
+        }
+    }, [phoneNumber, onChange, fixedCountry]);
 
     return (
         <YStack space='$4' {...wrapperProps}>
             <XStack width='100%' paddingHorizontal={0} shadowOpacity={0} shadowRadius={0} borderWidth={1} borderColor='$borderColorWithShadow' borderRadius='$5' bg={backgroundColor}>
-                <Button size={size} onPress={openBottomSheet} bg={backgroundColor} borderWidth={0} width={80} maxWidth={80}>
-                    <XStack alignItems='center' space='$2'>
-                        <Text fontSize={size}>{getEmojiFlag(selectedCountry.code)}</Text>
-                        <Text fontSize={size}>+{selectedCountry.phone}</Text>
-                    </XStack>
-                </Button>
+                <XStack alignItems='center' space='$2' paddingHorizontal={12}>
+                    <Text fontSize={size}>{getEmojiFlag(selectedCountry.code)}</Text>
+                    <Text fontSize={size}>+{selectedCountry.phone}</Text>
+                </XStack>
                 <Input
                     size={size}
                     ref={phoneInputRef}

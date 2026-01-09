@@ -1,14 +1,13 @@
-import React, { useState, useMemo, useCallback } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { SafeAreaView, FlatList, Pressable } from 'react-native';
-import { Avatar, Text, YStack, XStack, Separator, useTheme } from 'tamagui';
 import { toast, ToastPosition } from '@backpackapp-io/react-native-toast';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { abbreviateName, navigatorConfig, showActionSheet } from '../utils';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { useNavigation } from '@react-navigation/native';
+import { useCallback, useMemo } from 'react';
+import { FlatList, Pressable, SafeAreaView } from 'react-native';
+import { Avatar, Separator, Text, useTheme, XStack, YStack } from 'tamagui';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
-import storage from '../utils/storage';
+import { abbreviateName, showActionSheet } from '../utils';
 
 const DriverProfileScreen = () => {
     const theme = useTheme();
@@ -54,10 +53,10 @@ const DriverProfileScreen = () => {
 
     const menuItems = useMemo(() => {
         const items = [
-            { id: '1', title: 'Account', screen: 'DriverAccount' },
+            { id: '1', title: 'Cuenta', screen: 'DriverAccount' },
             {
                 id: '2',
-                title: 'Organization',
+                title: 'Organización',
                 handler: () => handleSelectOrganization(),
                 rightComponent: (
                     <Text color='$textSecondary' fontSize={13} numberOfLines={1}>

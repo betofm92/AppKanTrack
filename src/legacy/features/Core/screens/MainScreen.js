@@ -7,7 +7,7 @@ import { Header } from 'components';
 import OrdersStack from 'core/OrdersStack';
 import { useDriver, useMountedState } from 'hooks';
 import useFleetbase from 'hooks/use-fleetbase';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Platform } from 'react-native';
 import { EventRegister } from 'react-native-event-listeners';
 import PushNotification from 'react-native-push-notification';
@@ -160,13 +160,13 @@ const MainScreen = ({ navigation, route }) => {
                     },
                 })}
             >
-                <Tab.Screen key='orders' name='Orders' component={OrdersStack} />
+                <Tab.Screen key='orders' name='Ordenes' component={OrdersStack} />
                 {/* <Tab.Screen key="routes" name="Routes" component={RoutesScreen} /> */}
                 {/* <Tab.Screen key="schedule" name="Schedule" component={ScheduleStack} /> */}
                 {/* <Tab.Screen key="wallet" name="Wallet" component={WalletScreen} /> */}
                 <Tab.Screen key='issue' name='Issue' component={IssuesScreen} />
                 <Tab.Screen key='chat' name='Chat' component={ChatsScreen} />
-                <Tab.Screen key='account' name='Account' component={AccountStack} />
+                <Tab.Screen key='account' name='Cuenta' component={AccountStack} />
             </Tab.Navigator>
         </>
     );

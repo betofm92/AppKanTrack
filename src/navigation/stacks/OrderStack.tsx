@@ -1,10 +1,10 @@
-import OrderScreen from '../../screens/OrderScreen';
-import OrderHistoryScreen from '../../screens/OrderHistoryScreen';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { PortalHost } from '@gorhom/portal';
 import BackButton from '../../components/BackButton';
 import HeaderButton from '../../components/HeaderButton';
-import { PortalHost } from '@gorhom/portal';
+import OrderHistoryScreen from '../../screens/OrderHistoryScreen';
+import OrderScreen from '../../screens/OrderScreen';
 import { getTheme } from '../../utils';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 export const Order = {
     screen: OrderScreen,
@@ -50,7 +50,7 @@ export const OrderHistory = {
     screen: OrderHistoryScreen,
     options: ({ navigation }) => {
         return {
-            title: 'Order History',
+            title: 'Historial de Órdenes',
             headerTitleStyle: {
                 color: getTheme('textPrimary'),
             },

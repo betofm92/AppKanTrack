@@ -21,4 +21,11 @@
             <certificates src="system"/>
         </trust-anchors>
     </domain-config>
+
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">kantrack.tech</domain>
+        <trust-anchors>
+            <certificates src="system"/>
+        </trust-anchors>
+    </domain-config>
 </network-security-config>

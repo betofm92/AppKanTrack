@@ -1,23 +1,21 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { FlatList, RefreshControl, Platform } from 'react-native';
-import { Text, YStack, XStack, Separator, useTheme } from 'tamagui';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { endOfYear, format, startOfYear, subDays } from 'date-fns';
-import { formatDuration, formatMeters } from '../utils/format';
-import { useOrderManager } from '../contexts/OrderManagerContext';
-import { useNotification } from '../contexts/NotificationContext';
-import { useAuth } from '../contexts/AuthContext';
-import InsetShadow from 'react-native-inset-shadow';
-import useSocketClusterClient from '../hooks/use-socket-cluster-client';
-import useAppTheme from '../hooks/use-app-theme';
+import { useCallback, useEffect, useRef } from 'react';
+import { FlatList, Platform, RefreshControl } from 'react-native';
 import CalendarStrip from 'react-native-calendar-strip';
+import { Separator, Text, useTheme, XStack, YStack } from 'tamagui';
+import AdhocOrderCard from '../components/AdhocOrderCard';
 import OrderCard from '../components/OrderCard';
 import PastOrderCard from '../components/PastOrderCard';
-import AdhocOrderCard from '../components/AdhocOrderCard';
 import Spacer from '../components/Spacer';
-import useStorage from '../hooks/use-storage';
+import { useAuth } from '../contexts/AuthContext';
+import { useNotification } from '../contexts/NotificationContext';
+import { useOrderManager } from '../contexts/OrderManagerContext';
+import useAppTheme from '../hooks/use-app-theme';
+import useSocketClusterClient from '../hooks/use-socket-cluster-client';
+import { formatDuration, formatMeters } from '../utils/format';
 
 const isAndroid = Platform.OS === 'android';
 
@@ -183,7 +181,7 @@ const DriverOrderManagementScreen = () => {
             <YStack>
                 <YStack px='$1'>
                     <Text color='$textPrimary' fontSize={18} fontWeight='bold'>
-                        Active Orders: {allActiveOrders.length}
+                        Ordenes Activas: {allActiveOrders.length}
                     </Text>
                 </YStack>
                 <YStack>
@@ -211,7 +209,7 @@ const DriverOrderManagementScreen = () => {
                     <XStack alignItems='center' bg='$info' borderWidth={1} borderColor='$infoBorder' space='$2' px='$3' py='$2' borderRadius='$5' width='100%' flexWrap='wrap'>
                         <FontAwesomeIcon icon={faInfoCircle} color={theme['$infoText'].val} />
                         <Text color='$infoText' fontSize={16}>
-                            No current orders for {format(new Date(currentDate), 'yyyy-MM-dd')}
+                            No hay órdenes actuales para {format(new Date(currentDate), 'yyyy-MM-dd')}
                         </Text>
                     </XStack>
                 </YStack>
@@ -261,17 +259,17 @@ const DriverOrderManagementScreen = () => {
             </YStack>
             <YStack bg='$surface' px='$3' py='$4' borderBottomWidth={1} borderTopWidth={0} borderColor={isDarkMode ? '$borderColor' : '$borderColorWithShadow'}>
                 <Text color='$textPrimary' fontSize='$8' fontWeight='bold' mb='$1'>
-                    {todayString} orders
+                    órdenes {todayString}
                 </Text>
                 <XStack space='$2' alignItems='center'>
                     <Text color='$textSecondary' fontSize='$5'>
-                        {currentOrders.length} {currentOrders.length > 1 ? 'orders' : 'order'}
+                        {currentOrders.length} {currentOrders.length > 1 ? 'ordenes' : 'orden'}
                     </Text>
                     <Text color='$textSecondary' fontSize='$5'>
                         •
                     </Text>
                     <Text color='$textSecondary' fontSize='$5'>
-                        {stops} {stops > 1 ? 'stops' : 'stop'} left
+                        {stops} {stops > 1 ? 'paradas' : 'parada'} pendiente
                     </Text>
                     <Text color='$textSecondary' fontSize='$5'>
                         •

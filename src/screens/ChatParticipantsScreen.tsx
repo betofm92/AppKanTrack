@@ -1,17 +1,14 @@
-import { useRef, useEffect, useCallback, useState, useMemo } from 'react';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { FlatList, RefreshControl, Pressable, Alert } from 'react-native';
-import { Text, YStack, XStack, Button, Avatar, Separator, useTheme } from 'tamagui';
-import { PortalHost } from '@gorhom/portal';
+import { faChevronLeft, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faPlus, faTrash, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { last, abbreviateName, later } from '../utils';
-import { formatWhatsAppTimestamp } from '../utils/format';
-import { useChat } from '../contexts/ChatContext';
-import { useAuth } from '../contexts/AuthContext';
-import useSocketClusterClient from '../hooks/use-socket-cluster-client';
-import ChatParticipantAvatar from '../components/ChatParticipantAvatar';
+import { PortalHost } from '@gorhom/portal';
+import { useNavigation } from '@react-navigation/native';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Alert, FlatList, Pressable } from 'react-native';
+import { Button, Separator, Text, useTheme, XStack, YStack } from 'tamagui';
 import BottomSheetSelect from '../components/BottomSheetSelect';
+import ChatParticipantAvatar from '../components/ChatParticipantAvatar';
+import { useChat } from '../contexts/ChatContext';
+import useSocketClusterClient from '../hooks/use-socket-cluster-client';
 
 const ChatParticipantsScreen = ({ route }) => {
     const theme = useTheme();
@@ -54,15 +51,15 @@ const ChatParticipantsScreen = ({ route }) => {
     const handleRemoveParticipant = useCallback(
         (participant) => {
             Alert.alert(
-                'Confirmation',
-                'Are you sure you wish to remove this participant from the chat?',
+                'Confirmación',
+                '¿Seguro que deseas eliminar a este participante del chat?',
                 [
                     {
-                        text: 'Cancel',
+                        text: 'Cancelar',
                         style: 'cancel',
                     },
                     {
-                        text: 'Remove Participant',
+                        text: 'Eliminar participante',
                         onPress: async () => {
                             synchronouslyRemoveParticipant(participant);
                             await removeParticipant(channel, participant);
@@ -127,7 +124,7 @@ const ChatParticipantsScreen = ({ route }) => {
                                     <Button.Icon>
                                         <FontAwesomeIcon icon={faTrash} color={theme['$errorText'].val} />
                                     </Button.Icon>
-                                    <Button.Text color='$errorText'>Remove</Button.Text>
+                                    <Button.Text color='$errorText'>Eliminar</Button.Text>
                                 </Button>
                             </YStack>
                         )}
@@ -151,7 +148,7 @@ const ChatParticipantsScreen = ({ route }) => {
                         </YStack>
                         <YStack>
                             <Text color='$textPrimary' fontSize={24} fontWeight='bold'>
-                                Participants
+                                Participantes
                             </Text>
                         </YStack>
                     </XStack>
@@ -160,7 +157,7 @@ const ChatParticipantsScreen = ({ route }) => {
                             <Button.Icon>
                                 <FontAwesomeIcon icon={faPlus} color={theme['$infoText'].val} />
                             </Button.Icon>
-                            <Button.Text color='$infoText'>Add Participant</Button.Text>
+                            <Button.Text color='$infoText'>Agregar participante</Button.Text>
                         </Button>
                     </YStack>
                 </XStack>
@@ -201,7 +198,7 @@ const ChatParticipantsScreen = ({ route }) => {
                         </Pressable>
                     );
                 }}
-                title='Select Participant'
+                title='Seleccionar participante'
                 virtual={true}
                 renderInPlace={false}
                 portalHost='ChatParticipantsPortal'

@@ -1,0 +1,88 @@
+{
+    "common": {
+        "fleetbase": "Fleetbase",
+        "navigator": "Navegador",
+        "apiKey": "Clave API",
+        "cancel": "Cancelar",
+        "new": "Nuevo",
+        "create": "Crear",
+        "save": "Guardar",
+        "delete": "Eliminar",
+        "edit": "Editar",
+        "update": "Actualizar",
+        "service": "Servicio",
+        "retry": "Reintentar",
+        "loading": "Cargando...",
+        "confirm": "Confirmar",
+        "confirmation": "Confirmación",
+        "ok": "Aceptar",
+        "done": "Hecho",
+        "tryAgain": "Intentar Nuevamente"
+    },
+    "orderStatuses": {
+        "created": "Creado",
+        "preparing": "Preparando",
+        "dispatched": "Despachado",
+        "driver_enroute": "Conductor en ruta",
+        "pending": "Pendiente",
+        "in_progress": "En progreso",
+        "completed": "Completado"
+    },
+    "BootScreen": {
+        "missingRequiredConfigurationKeys": "Faltan claves de configuración requeridas"
+    },
+    "AccountScreen": {
+        "changeProfilePhotoOptions": {
+            "takePhoto": "Tomar Foto",
+            "photoLibrary": "Galería de Fotos",
+            "deleteProfilePhoto": "Eliminar Foto de Perfil"
+        },
+        "profilePhoto": "Foto de Perfil",
+        "email": "Correo Electrónico",
+        "phoneNumber": "Número de Teléfono",
+        "name": "Nombre",
+        "language": "Idioma",
+        "theme": "Tema",
+        "deleteAccount": "Eliminar Cuenta",
+        "termsOfService": "Términos de Servicio",
+        "privacyPolicy": "Política de Privacidad",
+        "tracking": "Seguimiento",
+        "account": "Cuenta",
+        "dataProtection": "Protección de Datos",
+        "clearCache": "Limpiar Caché",
+        "signOut": "Cerrar Sesión",
+        "signedOut": "Sesión Cerrada.",
+        "cacheCleared": "Caché Limpiada.",
+        "schemeChanged": "Ahora usando modo {{selectedScheme}}.",
+        "languageChanged": "Ahora usando {{selectedLanguage}}.",
+        "photoChanged": "Foto de perfil cambiada.",
+        "photoRemoved": "Foto de perfil eliminada."
+    },
+    "ProfileScreen": {
+        "organizationChanged": "Cambiado a la organización {{selectedOrganization}}."
+    },
+    "AddNewLocationScreen": {
+        "addNewAddress": "Agregar nueva dirección",
+        "streetName": "Nombre y número de calle",
+        "weThinkYoureAroundHere": "Creemos que estás por aquí",
+        "cantFindYourAddress": "¿No puedes encontrar tu dirección?",
+        "useMapInstead": "Usa un mapa para hacer esto en su lugar"
+    },
+    "SetupWarningScreen": {
+        "configurationMissing": "¡Configuraciones Faltantes!",
+        "unconfiguredApp": "Parece que no has configurado correctamente tu aplicación.",
+        "envMissing": "¡falta en el entorno!"
+    },
+    "DriverReportScreen": {},
+    "LocationPermissionScreen": {
+        "enableLocationServices": "Habilitar Servicios de Ubicación",
+        "enableLocationPrompt": "Necesitamos tu ubicación para proporcionar seguimiento y actualizaciones en tiempo real. Por favor, permite el acceso para continuar.",
+        "shareAndContinue": "Compartir y Continuar",
+        "permissionNeededTitle": "Permiso de Ubicación Necesario",
+        "enableInSettingsTitle": "Habilitar Ubicación en Configuración",
+        "permissionDeniedPrompt": "Sin acceso a la ubicación, algunas funciones no funcionarán. ¿Te gustaría permitir el acceso ahora?",
+        "locationBlockedPrompt": "El acceso a la ubicación ha sido bloqueado. Por favor, abre Configuración y habilítalo para continuar.",
+        "goToSettings": "Ir a Configuración",
+        "skipForNow": "Omitir por ahora"
+    }
+}

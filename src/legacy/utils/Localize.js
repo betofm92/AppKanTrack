@@ -1,9 +1,9 @@
+import i18n from 'i18n-js';
 import { I18nManager } from 'react-native';
 import { EventRegister } from 'react-native-event-listeners';
 import * as RNLocalize from 'react-native-localize';
 import { config, deepGet } from './Helper';
-import { getString, setString } from './Storage';
-import i18n from 'i18n-js';
+import { getString } from './Storage';
 
 const { emit } = EventRegister;
 
@@ -81,7 +81,7 @@ export default class LocalizeUtil {
 
     static setI18nConfig(lang = null) {
         // fallback if no available language fits
-        const fallback = { languageTag: 'en', isRTL: false };
+        const fallback = { languageTag: 'es', isRTL: false };
 
         // default
         const { languageTag, isRTL } = RNLocalize.findBestAvailableLanguage(Object.keys(LocalizeUtil.translationGetters)) ?? fallback;
@@ -111,4 +111,5 @@ const setLanguage = LocalizeUtil.setLanguage;
 const getLanguage = LocalizeUtil.getLanguage;
 const activeTranslations = LocalizeUtil.activeTranslations;
 
-export { setI18nConfig, translate, translateResource, translations, setLanguage, getLanguage, activeTranslations };
+export { activeTranslations, getLanguage, setI18nConfig, setLanguage, translate, translateResource, translations };
+
