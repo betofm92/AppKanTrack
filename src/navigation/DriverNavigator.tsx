@@ -562,17 +562,20 @@ const DriverNavigator = createBottomTabNavigator({
                 borderTopColor: isDarkMode ? theme['$gray-800'].val : theme['$gray-600'].val,
                 position: 'relative',
                 elevation: 0,
+                height: isAndroid ? 70 : 90, // Increased height
+                paddingBottom: isAndroid ? 10 : 30, // Adjust padding
             },
             tabBarIcon: ({ focused }) => {
                 const icon = getDefaultTabIcon(route.name);
 
-                return <FontAwesomeIcon icon={icon} size={isAndroid ? 18 : 20} color={focused ? focusedColor : blurredColor} />;
+                // Increased icon size
+                return <FontAwesomeIcon icon={icon} size={isAndroid ? 21 : 23} color={focused ? focusedColor : blurredColor} />;
             },
             tabBarLabelStyle: ({ focused }) => {
                 return {
-                    marginTop: isAndroid ? 4 : 15,
-                    fontSize: isAndroid ? 13 : 15,
-                    fontWeight: focued ? 600 : 300,
+                    marginTop: isAndroid ? 4 : 5,
+                    fontSize: isAndroid ? 14 : 15, // Increased font size
+                    fontWeight: focused ? '700' : '500', // Made text thicker (Bold/Medium)
                 };
             },
         };

@@ -1,4 +1,4 @@
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faFolderOpen, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { format } from 'date-fns';
@@ -245,7 +245,8 @@ const DriverReportScreen = () => {
                 }
                 ListFooterComponent={<Spacer height={200} />}
                 ListEmptyComponent={
-                    <YStack height={500} width='100%' flex={1} alignItems='center' justifyContent='center'>
+                    <YStack height={500} width='100%' flex={1} alignItems='center' justifyContent='center' space='$4'>
+                        <FontAwesomeIcon icon={faFolderOpen} size={64} color={theme['$gray-300'].val} />
                         <Text color='$textSecondary' fontSize={22}>
                             No hay {reportOptions[currentIndex].label}
                         </Text>

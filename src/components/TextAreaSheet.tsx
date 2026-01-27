@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import BottomSheet, { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { Portal } from '@gorhom/portal';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Keyboard } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import BottomSheet, { BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import { useTheme, Text, Button, XStack, YStack, Input } from 'tamagui';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faTimes, faSave } from '@fortawesome/free-solid-svg-icons';
-import { Portal } from '@gorhom/portal';
-import useAppTheme from '../hooks/use-app-theme';
+import { Button, Text, useTheme, YStack } from 'tamagui';
 import { useLanguage } from '../contexts/LanguageContext';
+import useAppTheme from '../hooks/use-app-theme';
 
 const TextAreaSheet = ({
     value = null,
@@ -70,14 +70,19 @@ const TextAreaSheet = ({
             <Button
                 alignItems='flex-start'
                 justifyContent='flex-start'
-                bg='$surface'
+                bg='$background'
                 borderWidth={1}
-                borderColor='$borderColor'
-                borderRadius='$5'
+                borderColor='$gray-300'
+                borderRadius='$4'
                 py='$3'
                 px='$3'
                 height={80}
                 onPress={openBottomSheet}
+                elevation={2}
+                shadowColor='#000'
+                shadowOffset={{ width: 0, height: 1 }}
+                shadowOpacity={0.1}
+                shadowRadius={2}
             >
                 {renderPlaceholder && (
                     <Button.Text fontSize={14} color='$textSecondary' opacity={0.6}>

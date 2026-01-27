@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import { FlatList, TextInput, Keyboard } from 'react-native';
-import { countries, getEmojiFlag } from 'countries-list';
-import BottomSheet, { BottomSheetView, BottomSheetFlatList, BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import { useTheme, View, Text, Button, XStack, YStack, Input } from 'tamagui';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import BottomSheet, { BottomSheetFlatList, BottomSheetTextInput, BottomSheetView } from '@gorhom/bottom-sheet';
 import { Portal } from '@gorhom/portal';
-import { debounce } from '../utils';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Keyboard } from 'react-native';
+import { Button, Input, Text, useTheme, XStack, YStack } from 'tamagui';
 import { currencies, getCurrency } from '../utils/currencies';
 
 const MoneyInput = ({
@@ -16,7 +14,7 @@ const MoneyInput = ({
     defaultCurrency = 'USD',
     type = 'volume',
     snapTo = '100%',
-    backgroundColor = '$surface',
+    backgroundColor = '$background',
     placeholder = 'Input amount',
     wrapperProps = {},
     portalHost = 'MainPortal',
@@ -107,11 +105,14 @@ const MoneyInput = ({
                 width='100%'
                 alignItems='center'
                 paddingHorizontal={0}
-                shadowOpacity={0}
-                shadowRadius={0}
+                shadowOpacity={0.1}
+                shadowRadius={2}
+                shadowColor='#000'
+                shadowOffset={{ width: 0, height: 1 }}
+                elevation={2}
                 borderWidth={1}
-                borderColor='$borderColor'
-                borderRadius='$5'
+                borderColor='$gray-300'
+                borderRadius='$4'
                 bg={backgroundColor}
             >
                 <XStack alignItems='center' justifyContent='flex-end' pl='$4'>

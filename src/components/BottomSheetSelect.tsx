@@ -211,7 +211,7 @@ const BottomSheetSelect = forwardRef(
         return (
             <YStack>
                 {virtual === false && (
-                    <Button justifyContent='flex-start' textAlign='left' onPress={openBottomSheet} bg='$surface' borderWidth={1} borderColor='$borderColor' borderRadius='$5'>
+                    <Button justifyContent='flex-start' textAlign='left' onPress={openBottomSheet} bg='$background' borderWidth={1} borderColor='$gray-300' borderRadius='$4' elevation={2} shadowColor='#000' shadowOffset={{ width: 0, height: 1 }} shadowOpacity={0.1} shadowRadius={2}>
                         {selected ? (
                             <Button.Text color='$textPrimary' fontSize={15}>
                                 {renderSelected()}

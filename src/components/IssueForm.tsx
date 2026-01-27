@@ -8,8 +8,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button, Spinner, Text, useTheme, YStack } from 'tamagui';
 import BottomSheetSelect from '../components/BottomSheetSelect';
 import TextAreaSheet from '../components/TextAreaSheet';
-import { getIssueCategories, getIssuePriorities, getIssueStatuses, getIssueTypes, IssuePriority, IssueStatus } from '../constants/Enums';
-import { uppercase } from '../utils/format';
+import { getIssuePriorities, getIssueStatuses, getIssueTypes, IssuePriority, IssueStatus } from '../constants/Enums';
 
 const IssueForm = ({ value = {}, onSubmit, isSubmitting = false, submitText = 'Publicar Problema' }) => {
     const theme = useTheme();
@@ -23,8 +22,8 @@ const IssueForm = ({ value = {}, onSubmit, isSubmitting = false, submitText = 'P
     const [isBottomSheetPresenting, setIsBottomSheetPresenting] = useState(false);
 
     const isValid = useMemo(() => {
-        return !!issue.type && !!issue.category && !!issue.report;
-    }, [issue.type, issue.category, issue.report]);
+        return !!issue.type && !!issue.report;
+    }, [issue.type, issue.report]);
 
     const handleUpdateIssue = (key, value) => {
         setIssue((prev) => ({
@@ -60,7 +59,7 @@ const IssueForm = ({ value = {}, onSubmit, isSubmitting = false, submitText = 'P
                     </Text>
                     <BottomSheetSelect
                         value={issue.type}
-                        options={getIssueTypes()}
+                        options={getIssueTypes().filter(({ key }) => ['VEHICLE', 'DRIVER', 'ROUTE'].includes(key))}
                         optionLabel='value'
                         optionValue='key'
                         onChange={(value) => handleUpdateIssue('type', value)}
@@ -71,28 +70,14 @@ const IssueForm = ({ value = {}, onSubmit, isSubmitting = false, submitText = 'P
                         onBottomSheetPositionChanged={setIsBottomSheetPresenting}
                     />
                 </YStack>
-                <YStack px='$3' space='$2'>
-                    <Text color='$textPrimary' fontSize={18} fontWeight='bold' px='$1'>
-                        Categoría de problema
-                    </Text>
-                    <BottomSheetSelect
-                        value={issue.category}
-                        options={getIssueCategories(uppercase(underscore(issue.type)))}
-                        onChange={(value) => handleUpdateIssue('category', value)}
-                        title='Seleccionar categoría de problema'
-                        humanize={true}
-                        portalHost='IssueFormPortal'
-                        snapTo='100%'
-                        onBottomSheetPositionChanged={setIsBottomSheetPresenting}
-                    />
-                </YStack>
+
                 <YStack px='$3' space='$2'>
                     <Text color='$textPrimary' fontSize={18} fontWeight='bold' px='$1'>
                         Prioridad del problema
                     </Text>
                     <BottomSheetSelect
                         value={issue.priority}
-                        options={getIssuePriorities()}
+                        options={getIssuePriorities().filter(({ key }) => ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'].includes(key))}
                         optionLabel='value'
                         optionValue='key'
                         onChange={(value) => handleUpdateIssue('priority', value)}
@@ -109,7 +94,7 @@ const IssueForm = ({ value = {}, onSubmit, isSubmitting = false, submitText = 'P
                     </Text>
                     <BottomSheetSelect
                         value={issue.status}
-                        options={getIssueStatuses()}
+                        options={getIssueStatuses().filter(({ key }) => !['BACKLOGGED', 'RE_OPENED', 'PENDING_REVIEW'].includes(key))}
                         optionLabel='value'
                         optionValue='key'
                         onChange={(value) => handleUpdateIssue('status', value)}

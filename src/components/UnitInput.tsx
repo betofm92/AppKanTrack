@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import { FlatList, TextInput, Keyboard } from 'react-native';
-import { countries, getEmojiFlag } from 'countries-list';
-import BottomSheet, { BottomSheetView, BottomSheetFlatList, BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import { useTheme, View, Text, Button, XStack, YStack, Input } from 'tamagui';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import BottomSheet, { BottomSheetFlatList, BottomSheetTextInput, BottomSheetView } from '@gorhom/bottom-sheet';
 import { Portal } from '@gorhom/portal';
-import { debounce } from '../utils';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Keyboard } from 'react-native';
+import { Button, Input, Text, useTheme, XStack, YStack } from 'tamagui';
 import unit from '../constants/Units';
 
 const getDefaultUnit = (type, defaultValue) => {
@@ -29,7 +27,7 @@ const UnitInput = ({
     defaultUnit = 'L',
     type = 'volume',
     snapTo = '100%',
-    backgroundColor = '$surface',
+    backgroundColor = '$background',
     placeholder = 'Input volume',
     wrapperProps = {},
     portalHost = 'MainPortal',
@@ -131,11 +129,14 @@ const UnitInput = ({
                 width='100%'
                 alignItems='center'
                 paddingHorizontal={0}
-                shadowOpacity={0}
-                shadowRadius={0}
+                shadowOpacity={0.1}
+                shadowRadius={2}
+                shadowColor='#000'
+                shadowOffset={{ width: 0, height: 1 }}
+                elevation={2}
                 borderWidth={1}
-                borderColor='$borderColor'
-                borderRadius='$5'
+                borderColor='$gray-300'
+                borderRadius='$4'
                 bg={backgroundColor}
             >
                 <Input

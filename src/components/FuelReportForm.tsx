@@ -17,7 +17,7 @@ const FuelReportForm = ({ value = {}, onSubmit, isSubmitting = false, submitText
     const navigation = useNavigation();
     const insets = useSafeAreaInsets();
     const [fuelReport, setFuelReport] = useState({
-        status: FuelReportStatus.DRAFT,
+        status: FuelReportStatus.SUBMITTED,
         odometer: '',
         volume: '',
         cost: '',
@@ -63,7 +63,7 @@ const FuelReportForm = ({ value = {}, onSubmit, isSubmitting = false, submitText
                         </Text>
                         <BottomSheetSelect
                             value={fuelReport.status}
-                            options={getDriverFuelReportStatuses()}
+                            options={getDriverFuelReportStatuses().filter(({ key }) => key !== 'DRAFT')}
                             optionLabel='value'
                             optionValue='key'
                             onChange={(value) => handleUpdateFuelReport('status', value)}
@@ -85,9 +85,14 @@ const FuelReportForm = ({ value = {}, onSubmit, isSubmitting = false, submitText
                             placeholder='Ingrese su kilometraje actual...'
                             borderWidth={1}
                             color='$textPrimary'
-                            borderColor='$borderColor'
-                            borderRadius='$5'
-                            bg='$surface'
+                            borderColor='$gray-300'
+                            borderRadius='$4'
+                            bg='$background'
+                            elevation={2}
+                            shadowColor='#000'
+                            shadowOffset={{ width: 0, height: 1 }}
+                            shadowOpacity={0.1}
+                            shadowRadius={2}
                         />
                     </YStack>
                     <YStack px='$3' space='$2'>

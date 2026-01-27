@@ -7,7 +7,7 @@ import { Button, Input, Text, useTheme, XStack, YStack } from 'tamagui';
 import useAppTheme from '../hooks/use-app-theme';
 import { getCountryByISO2, parsePhoneNumber } from '../utils';
 
-function getDefaultValues(value = null, fallbackCountry = 'EC') {
+function getDefaultValues(value = null, fallbackCountry = 'US') {
     if (typeof value === 'string' && value.startsWith('+')) {
         const segments = parsePhoneNumber(value);
         return {
@@ -30,7 +30,7 @@ const countryList = Object.entries(countries).map(([code, details]) => ({
     emoji: getEmojiFlag(code),
 }));
 
-const PhoneInput = ({ value, onChange, bg, width = '100%', defaultCountryCode = 'EC', size = '$5', wrapperProps = {} }) => {
+const PhoneInput = ({ value, onChange, bg, width = '100%', defaultCountryCode = 'US', size = '$5', wrapperProps = {} }) => {
     const defaultValue = getDefaultValues(value, defaultCountryCode);
     const theme = useTheme();
     const { isDarkMode } = useAppTheme();
@@ -71,29 +71,22 @@ const PhoneInput = ({ value, onChange, bg, width = '100%', defaultCountryCode = 
         closeBottomSheet();
     };
 
-    const fixedCountry = getCountryByISO2('EC');
-
-    /*useEffect(() => {
+    useEffect(() => {
         if (onChange) {
             const combinedValue = `+${selectedCountry.phone}${phoneNumber}`;
             onChange(combinedValue, phoneNumber, selectedCountry);
         }
-    }, [selectedCountry, phoneNumber, onChange]);*/
-
-    useEffect(() => {
-        if (onChange) {
-            const combinedValue = `+${fixedCountry.phone}${phoneNumber}`;
-            onChange(combinedValue, phoneNumber, fixedCountry);
-        }
-    }, [phoneNumber, onChange, fixedCountry]);
+    }, [selectedCountry, phoneNumber, onChange]);
 
     return (
         <YStack space='$4' {...wrapperProps}>
             <XStack width='100%' paddingHorizontal={0} shadowOpacity={0} shadowRadius={0} borderWidth={1} borderColor='$borderColorWithShadow' borderRadius='$5' bg={backgroundColor}>
-                <XStack alignItems='center' space='$2' paddingHorizontal={12}>
-                    <Text fontSize={size}>{getEmojiFlag(selectedCountry.code)}</Text>
-                    <Text fontSize={size}>+{selectedCountry.phone}</Text>
-                </XStack>
+                <Button size={size} onPress={openBottomSheet} bg={backgroundColor} borderWidth={0} width={80} maxWidth={80}>
+                    <XStack alignItems='center' space='$2'>
+                        <Text fontSize={size}>{getEmojiFlag(selectedCountry.code)}</Text>
+                        <Text fontSize={size}>+{selectedCountry.phone}</Text>
+                    </XStack>
+                </Button>
                 <Input
                     size={size}
                     ref={phoneInputRef}

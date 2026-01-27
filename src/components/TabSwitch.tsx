@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Pressable, Animated, Easing } from 'react-native';
-import { XStack, YStack, Text, useTheme } from 'tamagui';
+import { useEffect, useRef, useState } from 'react';
+import { Animated, Easing, Pressable } from 'react-native';
+import { Text, useTheme, XStack, YStack } from 'tamagui';
 
 const TabSwitch = ({ options, onTabChange, initialIndex = 0, borderRadius = 13 }) => {
     const [activeIndex, setActiveIndex] = useState(initialIndex);
@@ -49,7 +49,7 @@ const TabSwitch = ({ options, onTabChange, initialIndex = 0, borderRadius = 13 }
                 borderWidth={1}
                 borderColor='$borderColor'
                 overflow='hidden'
-                width='100%'
+                width='90%'
                 height={40}
                 justifyContent='space-between'
             >
@@ -62,8 +62,10 @@ const TabSwitch = ({ options, onTabChange, initialIndex = 0, borderRadius = 13 }
                             flex: 1,
                             width: containerWidth / options.length,
                             height: '100%',
-                            backgroundColor: theme.surface.val,
+                            backgroundColor: theme.background.val,
                             borderRadius: borderRadius,
+                            borderWidth: 2,
+                            borderColor: theme.primary.val,
                             transform: [
                                 {
                                     translateX: translateX,
@@ -78,13 +80,13 @@ const TabSwitch = ({ options, onTabChange, initialIndex = 0, borderRadius = 13 }
                         key={index}
                         onPress={() => handleTabPress(index)}
                         style={{
-                            paddingHorizontal: 10,
+                            paddingHorizontal: 9,
                             flex: 1,
                             justifyContent: 'center',
                             alignItems: 'center',
                         }}
                     >
-                        <Text color={index === activeIndex ? theme.textPrimary.val : theme.textSecondary.val} fontWeight={index === activeIndex ? 'bold' : 'normal'}>
+                        <Text color={index === activeIndex ? theme.primary.val : theme.textSecondary.val} fontWeight={index === activeIndex ? 'bold' : 'normal'}>
                             {option.label}
                         </Text>
                     </Pressable>
