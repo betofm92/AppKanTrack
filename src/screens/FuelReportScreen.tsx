@@ -2,7 +2,8 @@ import { Place } from '@fleetbase/sdk';
 import { faPenToSquare, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Portal } from '@gorhom/portal';
 import { useNavigation } from '@react-navigation/native';
-import { useCallback, useState } from 'react';
+import { format } from 'date-fns';
+import { useCallback, useLayoutEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Separator, Text, useTheme, XStack, YStack } from 'tamagui';
@@ -24,6 +25,16 @@ const FuelReportScreen = () => {
     } = useTempStore();
     const location = new Place({ id: fuelReport.id, location: fuelReport.location });
     const [isLoading, setIsLoading] = useState(false);
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerLeft: (props) => (
+                <Text color='$textPrimary' fontSize={18} fontWeight='bold' numberOfLines={1}>
+                    {format(new Date(fuelReport.created_at), 'MMM dd, yyyy HH:mm')}
+                </Text>
+            ),
+        });
+    }, [navigation, fuelReport]);
 
     const handleDeleteFuelReport = useCallback(() => {
         const handleDelete = async () => {

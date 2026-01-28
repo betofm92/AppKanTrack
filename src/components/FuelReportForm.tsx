@@ -70,7 +70,7 @@ const FuelReportForm = ({ value = {}, onSubmit, isSubmitting = false, submitText
                             title='Seleccione el estado del informe de combustible'
                             humanize={true}
                             portalHost='FuelReportFormPortal'
-                            snapTo='100%'
+                            snapTo='45%'
                             onBottomSheetPositionChanged={setIsBottomSheetPresenting}
                         />
                     </YStack>
@@ -83,6 +83,7 @@ const FuelReportForm = ({ value = {}, onSubmit, isSubmitting = false, submitText
                             onChangeText={(text) => handleUpdateFuelReport('odometer', text)}
                             keyboardType='phone-pad'
                             placeholder='Ingrese su kilometraje actual...'
+                            placeholderTextColor='$textSecondary'
                             borderWidth={1}
                             color='$textPrimary'
                             borderColor='$gray-300'

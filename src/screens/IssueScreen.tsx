@@ -1,19 +1,18 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Alert } from 'react-native';
-import { Text, YStack, XStack, Button, Spinner, Separator, useTheme } from 'tamagui';
 import { Place } from '@fleetbase/sdk';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faTimes, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Portal } from '@gorhom/portal';
+import { useNavigation } from '@react-navigation/native';
+import { format } from 'date-fns';
 import { humanize, titleize } from 'inflected';
-import { isResource } from '../utils';
-import { useTempStore } from '../contexts/TempStoreContext';
+import { useCallback, useLayoutEffect, useState } from 'react';
+import { Alert } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Separator, Text, useTheme, XStack, YStack } from 'tamagui';
 import Badge from '../components/Badge';
-import LoadingOverlay from '../components/LoadingOverlay';
 import HeaderButton from '../components/HeaderButton';
+import LoadingOverlay from '../components/LoadingOverlay';
 import PlaceMapView from '../components/PlaceMapView';
+import { useTempStore } from '../contexts/TempStoreContext';
 import useFleetbase from '../hooks/use-fleetbase';
 
 const IssueScreen = () => {
@@ -26,6 +25,16 @@ const IssueScreen = () => {
     } = useTempStore();
     const location = new Place({ id: issue.id, location: issue.location });
     const [isLoading, setIsLoading] = useState(false);
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerLeft: (props) => (
+                <Text color='$textPrimary' fontSize={18} fontWeight='bold' numberOfLines={1}>
+                    {format(new Date(issue.created_at), 'MMM dd, yyyy HH:mm')}
+                </Text>
+            ),
+        });
+    }, [navigation, issue]);
 
     const handleDeleteIssue = useCallback(() => {
         const handleDelete = async () => {

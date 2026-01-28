@@ -26,7 +26,6 @@ import DriverOnlineToggle from '../components/DriverOnlineToggle';
 import HeaderButton from '../components/HeaderButton';
 import { useChat } from '../contexts/ChatContext';
 import { useOrderManager } from '../contexts/OrderManagerContext';
-import { useTempStore } from '../contexts/TempStoreContext';
 import useAppTheme from '../hooks/use-app-theme';
 import DriverLayout from '../layouts/DriverLayout';
 import ChatChannelScreen from '../screens/ChatChannelScreen';
@@ -340,18 +339,10 @@ const DriverReportTab = createNativeStackNavigator({
         FuelReport: {
             screen: FuelReportScreen,
             options: ({ route, navigation }) => {
-                const {
-                    store: { fuelReport },
-                } = useTempStore();
-
                 return {
                     presentation: 'modal',
                     headerTitle: '',
-                    headerLeft: (props) => (
-                        <Text color='$textPrimary' fontSize={18} fontWeight='bold' numberOfLines={1}>
-                            {format(new Date(fuelReport.created_at), 'MMM dd, yyyy HH:mm')}
-                        </Text>
-                    ),
+                    headerLeft: undefined,
                     headerRight: (props) => <PortalHost name='FuelReportScreenHeaderRightPortal' />,
                     headerStyle: {
                         backgroundColor: getTheme('background'),
@@ -404,18 +395,10 @@ const DriverReportTab = createNativeStackNavigator({
         Issue: {
             screen: IssueScreen,
             options: ({ route, navigation }) => {
-                const {
-                    store: { issue },
-                } = useTempStore();
-
                 return {
                     presentation: 'modal',
                     headerTitle: '',
-                    headerLeft: (props) => (
-                        <Text color='$textPrimary' fontSize={18} fontWeight='bold' numberOfLines={1}>
-                            {format(new Date(issue.created_at), 'MMM dd, yyyy HH:mm')}
-                        </Text>
-                    ),
+                    headerLeft: undefined,
                     headerRight: (props) => <PortalHost name='IssueScreenHeaderRightPortal' />,
                     headerStyle: {
                         backgroundColor: getTheme('background'),

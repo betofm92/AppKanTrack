@@ -130,6 +130,7 @@ const MoneyInput = ({
                     onFocus={handleInputFocus}
                     bg={backgroundColor}
                     color='$textPrimary'
+                    placeholderTextColor='$textSecondary'
                     borderRadius={0}
                     borderTopLeftRadius='$3'
                     borderBottomLeftRadius='$3'
