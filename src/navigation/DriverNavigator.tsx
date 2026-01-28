@@ -482,8 +482,8 @@ const DriverNavigator = createBottomTabNavigator({
     screenOptions: ({ route, navigation }) => {
         const theme = useTheme();
         const { isDarkMode } = useAppTheme();
-        const focusedColor = theme.primary.val;
-        const blurredColor = theme.tabIconBlur.val;
+        const focusedColor = isDarkMode ? '#FFFFFF' : theme.primary.val;
+        const blurredColor = isDarkMode ? '#FFFFFF' : theme.tabIconBlur.val;
 
         return {
             headerTitle: '',
@@ -538,7 +538,7 @@ const DriverNavigator = createBottomTabNavigator({
                 );
             },
             tabBarInactiveTintColor: blurredColor,
-            tabBarActiveTintColor: theme.primary.val,
+            tabBarActiveTintColor: focusedColor,
             tabBarStyle: {
                 backgroundColor: theme.background.val,
                 borderTopWidth: isAndroid ? 0 : 1,
