@@ -66,7 +66,7 @@ const IssueForm = ({ value = {}, onSubmit, isSubmitting = false, submitText = 'P
                         title='Seleccione el tipo de problema'
                         humanize={true}
                         portalHost='IssueFormPortal'
-                        snapTo='100%'
+                        snapTo='35%'
                         onBottomSheetPositionChanged={setIsBottomSheetPresenting}
                     />
                 </YStack>
@@ -84,7 +84,7 @@ const IssueForm = ({ value = {}, onSubmit, isSubmitting = false, submitText = 'P
                         title='Seleccionar prioridad de problema'
                         humanize={true}
                         portalHost='IssueFormPortal'
-                        snapTo='100%'
+                        snapTo='45%'
                         onBottomSheetPositionChanged={setIsBottomSheetPresenting}
                     />
                 </YStack>

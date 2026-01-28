@@ -1,9 +1,11 @@
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import BottomSheet, { BottomSheetFlatList, BottomSheetTextInput, BottomSheetView } from '@gorhom/bottom-sheet';
 import { Portal } from '@gorhom/portal';
 import { titleize as titleizeString } from 'inflected';
 import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { Keyboard } from 'react-native';
-import { Button, Text, useTheme, YStack } from 'tamagui';
+import { Button, Text, useTheme, XStack, YStack } from 'tamagui';
 import useAppTheme from '../hooks/use-app-theme';
 
 const BottomSheetSelect = forwardRef(
@@ -137,17 +139,27 @@ const BottomSheetSelect = forwardRef(
                     enablePanDownToClose={true}
                     enableOverDrag={false}
                     style={{ flex: 1, width: '100%' }}
-                    backgroundStyle={{ backgroundColor: theme.background.val, borderWidth: 1, borderColor: theme.borderColorWithShadow.val }}
-                    handleIndicatorStyle={{ backgroundColor: theme.secondary.val }}
+                    backgroundStyle={{ 
+                        backgroundColor: theme.background.val, 
+                        borderWidth: 1, 
+                        borderColor: theme.borderColorWithShadow.val,
+                        borderTopLeftRadius: 20,
+                        borderTopRightRadius: 20,
+                    }}
+                    handleIndicatorStyle={{ 
+                        backgroundColor: theme['$gray-400']?.val || theme.secondary.val,
+                        width: 40,
+                        height: 5,
+                    }}
                 >
                     {title && (
-                        <YStack px='$3' pb='$3'>
-                            <Text color='$textPrimary' fontSize={18}>
+                        <YStack px='$4' pt='$2' pb='$3'>
+                            <Text color='$textPrimary' fontSize={20} fontWeight='bold'>
                                 {title}
                             </Text>
                         </YStack>
                     )}
-                    <YStack px='$2'>
+                    <YStack px='$4' pb='$2'>
                         <BottomSheetTextInput
                             ref={searchInputRef}
                             placeholder={searchPlaceholder}
@@ -162,17 +174,19 @@ const BottomSheetSelect = forwardRef(
                                 borderColor: theme.borderColor.val,
                                 padding: 14,
                                 borderRadius: 13,
-                                fontSize: 13,
+                                fontSize: 14,
                                 marginBottom: 10,
                             }}
                         />
                     </YStack>
                     <BottomSheetView
-                        style={{ flex: 1, backgroundColor: theme.background.val, paddingHorizontal: 8, borderColor: theme.borderColorWithShadow.val, borderWidth: 1, borderTopWidth: 0 }}
+                        style={{ flex: 1, backgroundColor: theme.background.val, paddingHorizontal: 16, borderColor: theme.borderColorWithShadow.val, borderWidth: 1, borderTopWidth: 0 }}
                     >
                         <BottomSheetFlatList
+                            style={{ flex: 1 }}
+                            contentContainerStyle={{ paddingBottom: 20 }}
                             data={filteredOptions}
-                            keyExtractor={(item, index) => index}
+                            keyExtractor={(item, index) => index.toString()}
                             renderItem={({ item, index }) => {
                                 if (typeof renderOption === 'function') {
                                     return renderOption({ item, index, handleSelect });
@@ -185,18 +199,30 @@ const BottomSheetSelect = forwardRef(
                                         bg='$surface'
                                         justifyContent='space-between'
                                         space='$2'
-                                        mb='$2'
-                                        px='$3'
+                                        mb='$3'
+                                        px='$4'
+                                        py='$3.5'
+                                        height={56}
+                                        borderRadius='$4'
                                         hoverStyle={{
-                                            scale: 0.9,
-                                            opacity: 0.5,
+                                            scale: 0.98,
+                                            opacity: 0.8,
                                         }}
                                         pressStyle={{
-                                            scale: 0.9,
-                                            opacity: 0.5,
+                                            scale: 0.98,
+                                            opacity: 0.8,
                                         }}
                                     >
-                                        <Text>{typeof optionLabel === 'string' ? item[optionLabel] : item}</Text>
+                                        <XStack flex={1} alignItems='center' justifyContent='space-between'>
+                                            <Text color='$textPrimary' fontSize={16}>
+                                                {typeof optionLabel === 'string' ? item[optionLabel] : item}
+                                            </Text>
+                                            <FontAwesomeIcon 
+                                                icon={faChevronRight} 
+                                                size={18} 
+                                                color={theme['$textSecondary'].val} 
+                                            />
+                                        </XStack>
                                     </Button>
                                 );
                             }}
